@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import HeaderHUD from './components/HeaderHUD';
-import HeroSection from './components/HeroSection';
-import ChapterOneTwo from './components/ChapterOneTwo';
+import CinematicHeroScroll from './components/CinematicHeroScroll';
+import ScrollytellingSection from './components/ScrollytellingSection';
+import VideoInfrastructureScroll from './components/VideoInfrastructureScroll';
 import GatewayComparator from './components/GatewayComparator';
+import HorizontalPipelineScroll from './components/HorizontalPipelineScroll';
 import SplitPipelineCanvas from './components/SplitPipelineCanvas';
 import InteractiveFrameScrubber from './components/InteractiveFrameScrubber';
 import AesVaultSimulator from './components/AesVaultSimulator';
@@ -58,7 +60,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen bg-[#F8FAFC] text-slate-800 flex flex-col antialiased ${isPresentationMode ? 'presentation-mode' : ''}`}>
+    <div className={`min-h-screen bg-[#06090F] text-slate-200 flex flex-col antialiased selection:bg-emerald-500/30 selection:text-emerald-300 ${isPresentationMode ? 'presentation-mode' : ''}`}>
       {/* HUD Header Sticky con Zoom TV, Command Palette, Audio Synthesizer y Modo Presentación */}
       <HeaderHUD 
         onOpenDictionary={() => setIsDictionaryOpen(true)}
@@ -67,56 +69,59 @@ export default function App() {
         onTogglePresentation={handleTogglePresentation}
       />
 
-      {/* Contenedor Principal Fijo Desktop (Estilo Editorial Blanco Elegante M-LES) */}
-      <main className="flex-1 w-full max-w-[1520px] mx-auto px-4 md:px-6 py-8 space-y-20">
+      {/* Contenedor Principal Fijo Desktop (Estilo Impeccable Dark Cyber) */}
+      <main className="flex-1 w-full max-w-[1520px] mx-auto px-4 md:px-6 py-6 space-y-16">
         
-        {/* Portada & Bento Grid de Métricas SENA CIES */}
-        <HeroSection
-          onSelectTerm={setSelectedTerm}
-          onOpenLightbox={handleOpenLightbox}
-        />
+        {/* HERO CINEMÁTICO: Video Scroll con Profundidad GSAP & Telemetría SENA CIES Huila */}
+        <CinematicHeroScroll onSelectTerm={setSelectedTerm} />
 
-        {/* Capítulo 01 y 02: Problema, Justificación, Objetivos y Alcance Estricto */}
-        <ChapterOneTwo onSelectTerm={setSelectedTerm} />
+        {/* CAPÍTULOS 01 & 02: Scrollytelling Pinned con Video Terminal & Transición Causal */}
+        <ScrollytellingSection onSelectTerm={setSelectedTerm} />
 
-        {/* Capítulo 03: Arquitectura y Comparador ePayco Split vs Adyen vs Mercado Pago */}
+        {/* CAPÍTULO 03.1: Video Background Scroll & Arquitectura en 5 Capas */}
+        <VideoInfrastructureScroll onSelectTerm={setSelectedTerm} />
+
+        {/* CAPÍTULO 03.2: Comparador ePayco Split vs Adyen & Patrón Adapter */}
         <GatewayComparator onSelectTerm={setSelectedTerm} />
 
-        {/* Capítulo 04: Scrollytelling Transaccional, Motion Scrubber & Bóveda AES-256 */}
+        {/* CAPÍTULO 04.1: Horizontal Pinned Scroll — Ciclo Transaccional de 6 Etapas */}
+        <HorizontalPipelineScroll />
+
+        {/* CAPÍTULO 04.2: Motion Graphics Transaccional, Frame Scrubber & Bóveda AES-256 */}
         <div id="interactive-motion" className="space-y-8 pt-4">
           <SplitPipelineCanvas />
           <InteractiveFrameScrubber />
           <AesVaultSimulator />
         </div>
 
-        {/* Capítulo 05: Explorador Interactivo de Requisitos Funcionales (72 ERF) */}
+        {/* CAPÍTULO 05: Explorador de Requisitos Funcionales (72 ERFs con Modal & Simulador de Flujos) */}
         <RequirementsExplorer
           onOpenLightbox={handleOpenLightbox}
           onSelectTerm={setSelectedTerm}
         />
 
-        {/* Capítulo 06: Catálogo Completo de Mockups UI/UX (72 Pantallas) */}
+        {/* CAPÍTULO 06: Catálogo Completo de Mockups UI/UX (72 Pantallas) */}
         <MockupsExplorer onOpenLightbox={handleOpenLightbox} />
 
-        {/* Capítulo 07: Diagramas Oficiales de Modelado UML (16 Diagramas a 300 DPI) */}
+        {/* CAPÍTULO 07: Diagramas Oficiales de Modelado UML (16 Diagramas a 300 DPI) */}
         <DiagramsExplorer onOpenLightbox={handleOpenLightbox} />
 
-        {/* Capítulo 08: Modelo de Base de Datos Relacional PostgreSQL 16 (DER) */}
+        {/* CAPÍTULO 08: Modelo de Base de Datos Relacional PostgreSQL 16 (15 Tablas DER) */}
         <DatabaseDERSection
           onSelectTerm={setSelectedTerm}
           onOpenLightbox={handleOpenLightbox}
         />
 
-        {/* Capítulo 09: Matriz de Trazabilidad End-to-End & Linaje Causal */}
+        {/* CAPÍTULO 09: Matriz de Trazabilidad End-to-End & Linaje Causal */}
         <TraceabilityExplorer onOpenLightbox={handleOpenLightbox} />
 
-        {/* Capítulo 10: Estudio Financiero, Costos (Capex vs Opex) y Calculadora ROI */}
+        {/* CAPÍTULO 10: Estudio Financiero, Costos (Capex vs Opex) y Calculadora ROI */}
         <FinancialSimulator onSelectTerm={setSelectedTerm} />
 
-        {/* Capítulo 11: Marco Legal, Habeas Data Ley 1581 y Licenciamiento 3D */}
+        {/* CAPÍTULO 11: Marco Legal, Habeas Data Ley 1581 y Licenciamiento */}
         <LegalMatrixSection onSelectTerm={setSelectedTerm} />
 
-        {/* Capítulo 12: Aseguramiento de Calidad (QA), SLAs y Matriz de Riesgos */}
+        {/* CAPÍTULO 12: Aseguramiento de Calidad (QA), SLAs y Ciberseguridad */}
         <QualitySecuritySection onSelectTerm={setSelectedTerm} />
 
       </main>

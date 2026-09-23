@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TechTerm from './TechTerm';
 import { DollarSign, CheckCircle2, AlertTriangle, TrendingUp, Server, Shield } from 'lucide-react';
+import { sound } from '../lib/soundSynthesizer';
 
 export default function FinancialSimulator({ onSelectTerm }) {
   const [gmv, setGmv] = useState(15000000); // 15 millones COP
@@ -11,7 +12,7 @@ export default function FinancialSimulator({ onSelectTerm }) {
     return '$' + Math.round(num).toLocaleString('es-CO') + ' COP';
   };
 
-  // Cálculos financieros
+  // Financial calculations
   const avgTicket = 60000;
   const estimatedTx = Math.max(1, Math.round(gmv / avgTicket));
 
@@ -37,32 +38,32 @@ export default function FinancialSimulator({ onSelectTerm }) {
 
   return (
     <section className="space-y-6" id="cap7-costos">
-      <div className="border-b border-slate-200 pb-4">
-        <span className="text-xs font-extrabold uppercase tracking-wider text-emerald-600 block mb-0.5">
-          Capítulo 07
+      <div className="border-b border-slate-800 pb-4">
+        <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 block mb-0.5">
+          Capítulo 10 • Sostenibilidad y Finanzas
         </span>
-        <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-          <DollarSign className="w-6 h-6 text-emerald-600" />
-          Estudio Financiero, Costos (Capex vs Opex) y Calculadora de Viabilidad
+        <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2">
+          <DollarSign className="w-6 h-6 text-emerald-400" />
+          <span>Estudio Financiero, Costos (Capex vs Opex) y Calculadora de Viabilidad</span>
         </h2>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm text-slate-400 mt-1">
           Evaluación de Costo Total de Propiedad (<TechTerm id="capex-opex" onSelectTerm={onSelectTerm}>Capex vs Opex</TechTerm>) y simulador en vivo del <TechTerm id="tco-breakeven" onSelectTerm={onSelectTerm}>Punto de Equilibrio</TechTerm> del modelo <TechTerm id="saas-freemium" onSelectTerm={onSelectTerm}>SaaS Freemium</TechTerm>.
         </p>
       </div>
 
       {/* Tabla de Infraestructura Capex / Opex */}
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-xs">
-        <div className="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-          <h4 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
+      <div className="bg-[#0B101B] border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+        <div className="p-4 bg-[#06090F] border-b border-slate-800 flex items-center justify-between">
+          <h4 className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">
             Estructura de Costos de Infraestructura y Herramientas (1 Año)
           </h4>
-          <span className="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
+          <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded">
             Capex = $0 COP
           </span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-100/75 text-slate-700 border-b border-slate-200">
+            <thead className="bg-[#06090F]/80 text-slate-400 border-b border-slate-800 font-mono">
               <tr>
                 <th className="p-3.5 font-bold">Rubro / Recurso</th>
                 <th className="p-3.5 font-bold">Especificación Técnica</th>
@@ -71,40 +72,40 @@ export default function FinancialSimulator({ onSelectTerm }) {
                 <th className="p-3.5 font-bold">Naturaleza Contable</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200 text-slate-600">
+            <tbody className="divide-y divide-slate-800 text-slate-300">
               <tr>
-                <td className="p-3.5 font-bold text-slate-900">Hosting Cloud VPS Linux</td>
+                <td className="p-3.5 font-bold text-white font-mono">Hosting Cloud VPS Linux</td>
                 <td className="p-3.5">2 vCPU, 4 GB RAM, 80 GB SSD NVMe, IP dedicada</td>
-                <td className="p-3.5 font-mono">$15.000 COP</td>
-                <td className="p-3.5 font-mono">$180.000 COP</td>
-                <td className="p-3.5">Gasto Operativo (Opex)</td>
+                <td className="p-3.5 font-mono text-emerald-400">$15.000 COP</td>
+                <td className="p-3.5 font-mono text-emerald-400">$180.000 COP</td>
+                <td className="p-3.5 font-mono text-slate-400">Gasto Operativo (Opex)</td>
               </tr>
               <tr>
-                <td className="p-3.5 font-bold text-slate-900">Dominio Web (.co / .com)</td>
+                <td className="p-3.5 font-bold text-white font-mono">Dominio Web (.co / .com)</td>
                 <td className="p-3.5">Registro DNS con WHOIS y certificado SSL Let's Encrypt</td>
-                <td className="p-3.5 font-mono">$4.583 COP</td>
-                <td className="p-3.5 font-mono">$55.000 COP</td>
-                <td className="p-3.5">Gasto Operativo (Opex)</td>
+                <td className="p-3.5 font-mono text-emerald-400">$4.583 COP</td>
+                <td className="p-3.5 font-mono text-emerald-400">$55.000 COP</td>
+                <td className="p-3.5 font-mono text-slate-400">Gasto Operativo (Opex)</td>
               </tr>
               <tr>
-                <td className="p-3.5 font-bold text-slate-900">Motor PostgreSQL 16</td>
+                <td className="p-3.5 font-bold text-white font-mono">Motor PostgreSQL 16</td>
                 <td className="p-3.5">Instalación nativa con almacenamiento en bloque SSD</td>
-                <td className="p-3.5 font-mono text-emerald-700 font-bold">$0 COP</td>
-                <td className="p-3.5 font-mono text-emerald-700 font-bold">$0 COP</td>
-                <td className="p-3.5">Open Source Comunitario</td>
+                <td className="p-3.5 font-mono text-emerald-400 font-bold">$0 COP</td>
+                <td className="p-3.5 font-mono text-emerald-400 font-bold">$0 COP</td>
+                <td className="p-3.5 font-mono text-slate-400">Open Source Comunitario</td>
               </tr>
               <tr>
-                <td className="p-3.5 font-bold text-slate-900">Pasarela ePayco Split</td>
+                <td className="p-3.5 font-bold text-white font-mono">Pasarela ePayco Split</td>
                 <td className="p-3.5">API REST de pagos agregados sin cobro mensual fijo</td>
-                <td className="p-3.5 font-mono text-emerald-700 font-bold">$0 COP fijo</td>
-                <td className="p-3.5 font-mono text-emerald-700 font-bold">$0 COP fijo</td>
-                <td className="p-3.5">Tarifa transaccional variable</td>
+                <td className="p-3.5 font-mono text-emerald-400 font-bold">$0 COP fijo</td>
+                <td className="p-3.5 font-mono text-emerald-400 font-bold">$0 COP fijo</td>
+                <td className="p-3.5 font-mono text-slate-400">Tarifa transaccional variable</td>
               </tr>
-              <tr className="bg-emerald-50/50 font-bold">
-                <td className="p-3.5 text-emerald-900" colSpan="2">TOTAL COSTOS OPERATIVOS FIJOS (OPEX ANUAL):</td>
-                <td className="p-3.5 font-mono text-emerald-800">~$19.583 COP/mes</td>
-                <td className="p-3.5 font-mono text-emerald-800 text-sm">$235.000 COP/año</td>
-                <td className="p-3.5 text-emerald-800">Alta Autosuficiencia</td>
+              <tr className="bg-emerald-500/10 font-bold font-mono">
+                <td className="p-3.5 text-emerald-300" colSpan="2">TOTAL COSTOS OPERATIVOS FIJOS (OPEX ANUAL):</td>
+                <td className="p-3.5 text-emerald-400">~$19.583 COP/mes</td>
+                <td className="p-3.5 text-emerald-400 text-sm">$235.000 COP/año</td>
+                <td className="p-3.5 text-emerald-300">Alta Autosuficiencia</td>
               </tr>
             </tbody>
           </table>
@@ -112,29 +113,29 @@ export default function FinancialSimulator({ onSelectTerm }) {
       </div>
 
       {/* CALCULADORA FINANCIERA INTERACTIVA */}
-      <div className="bg-white border-2 border-emerald-500 rounded-xl p-6 shadow-card space-y-6">
-        <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
+      <div className="bg-[#0B101B] border border-emerald-500/40 rounded-2xl p-6 shadow-2xl space-y-6">
+        <div className="border-b border-slate-800 pb-3 flex items-center justify-between">
           <div>
-            <span className="text-xs font-extrabold uppercase tracking-wider text-emerald-600 block mb-0.5">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 block mb-0.5">
               Simulador Interactivo en Vivo
             </span>
-            <h3 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-emerald-500" />
-              Calculadora de Punto de Equilibrio y Distribución de Fondos
+            <h3 className="text-xl font-bold text-white flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-emerald-400" />
+              <span>Calculadora de Punto de Equilibrio y Distribución de Fondos</span>
             </h3>
           </div>
-          <span className="text-xs font-bold text-slate-400">Ajusta los deslizadores</span>
+          <span className="text-xs font-mono text-slate-400">Ajusta los deslizadores</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Controles */}
-          <div className="space-y-5">
+          <div className="space-y-5 font-mono">
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-bold text-slate-700">
+                <label className="text-xs font-bold text-slate-300">
                   Ventas Brutas Mensuales Procesadas (GMV):
                 </label>
-                <span className="text-sm font-extrabold font-mono text-emerald-600">
+                <span className="text-sm font-extrabold text-emerald-400">
                   {formatCOP(gmv)}
                 </span>
               </div>
@@ -144,8 +145,10 @@ export default function FinancialSimulator({ onSelectTerm }) {
                 max="60000000"
                 step="500000"
                 value={gmv}
-                onChange={(e) => setGmv(Number(e.target.value))}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
+                onChange={(e) => {
+                  setGmv(Number(e.target.value));
+                }}
+                className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-400"
               />
               <span className="text-[11px] text-slate-400 block mt-1">
                 Aproximadamente {estimatedTx.toLocaleString()} transacciones con ticket promedio de $60.000 COP.
@@ -154,10 +157,10 @@ export default function FinancialSimulator({ onSelectTerm }) {
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-bold text-slate-700">
+                <label className="text-xs font-bold text-slate-300">
                   Comercios con Plan Profesional ($59.000 COP/mes):
                 </label>
-                <span className="text-sm font-extrabold font-mono text-emerald-600">
+                <span className="text-sm font-extrabold text-emerald-400">
                   {proStores} tiendas
                 </span>
               </div>
@@ -167,17 +170,19 @@ export default function FinancialSimulator({ onSelectTerm }) {
                 max="50"
                 step="1"
                 value={proStores}
-                onChange={(e) => setProStores(Number(e.target.value))}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
+                onChange={(e) => {
+                  setProStores(Number(e.target.value));
+                }}
+                className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-400"
               />
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-bold text-slate-700">
+                <label className="text-xs font-bold text-slate-300">
                   Compradores con Membresía Plus ($14.900 COP/mes):
                 </label>
-                <span className="text-sm font-extrabold font-mono text-emerald-600">
+                <span className="text-sm font-extrabold text-emerald-400">
                   {plusBuyers} compradores
                 </span>
               </div>
@@ -187,56 +192,58 @@ export default function FinancialSimulator({ onSelectTerm }) {
                 max="150"
                 step="5"
                 value={plusBuyers}
-                onChange={(e) => setPlusBuyers(Number(e.target.value))}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
+                onChange={(e) => {
+                  setPlusBuyers(Number(e.target.value));
+                }}
+                className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-400"
               />
             </div>
           </div>
 
           {/* Resultados de la Simulación */}
-          <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 flex flex-col justify-between space-y-3">
+          <div className="bg-[#06090F] border border-slate-800 rounded-xl p-5 flex flex-col justify-between space-y-3 font-mono">
             <div className="space-y-2 text-xs">
-              <div className="flex justify-between py-1 border-b border-slate-200">
-                <span className="text-slate-500">Monto Bruto Recaudado (GMV):</span>
-                <span className="font-mono font-bold text-slate-900">{formatCOP(gmv)}</span>
+              <div className="flex justify-between py-1 border-b border-slate-800">
+                <span className="text-slate-400">Monto Bruto Recaudado (GMV):</span>
+                <span className="font-bold text-white">{formatCOP(gmv)}</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-slate-200">
-                <span className="text-slate-500">Tarifa Pasarela ePayco (2.68% + $900 + IVA):</span>
-                <span className="font-mono font-bold text-red-600">-{formatCOP(epaycoTotalFee)}</span>
+              <div className="flex justify-between py-1 border-b border-slate-800">
+                <span className="text-slate-400">Tarifa Pasarela ePayco (2.68% + $900 + IVA):</span>
+                <span className="font-bold text-red-400">-{formatCOP(epaycoTotalFee)}</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-slate-200 bg-emerald-50 p-1.5 rounded">
-                <span className="text-emerald-900 font-bold">Comisión de Venta Mercanex:</span>
-                <span className="font-mono font-extrabold text-emerald-700">$0 COP (0.0%)</span>
+              <div className="flex justify-between py-1 border-b border-slate-800 bg-emerald-500/10 p-1.5 rounded">
+                <span className="text-emerald-300 font-bold">Comisión de Venta Mercanex:</span>
+                <span className="font-extrabold text-emerald-400">$0 COP (0.0%)</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-slate-200">
-                <span className="text-slate-500">Dispersión Neta a Comerciantes:</span>
-                <span className="font-mono font-bold text-slate-800">{formatCOP(sellerNet)}</span>
+              <div className="flex justify-between py-1 border-b border-slate-800">
+                <span className="text-slate-400">Dispersión Neta a Comerciantes:</span>
+                <span className="font-bold text-slate-200">{formatCOP(sellerNet)}</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-slate-200">
-                <span className="text-slate-500">Ingresos SaaS Freemium Mercanex:</span>
-                <span className="font-mono font-bold text-emerald-700">+{formatCOP(totalSaasRevenue)}</span>
+              <div className="flex justify-between py-1 border-b border-slate-800">
+                <span className="text-slate-400">Ingresos SaaS Freemium Mercanex:</span>
+                <span className="font-bold text-emerald-400">+{formatCOP(totalSaasRevenue)}</span>
               </div>
               <div className="flex justify-between py-1">
-                <span className="text-slate-500">Costo Operativo Fijo Servidor:</span>
-                <span className="font-mono font-bold text-slate-700">-{formatCOP(monthlyOpex)}</span>
+                <span className="text-slate-400">Costo Operativo Fijo Servidor:</span>
+                <span className="font-bold text-slate-300">-{formatCOP(monthlyOpex)}</span>
               </div>
             </div>
 
             {/* Resultado Final y Badge de Break-Even */}
-            <div className="pt-2 border-t border-slate-200">
+            <div className="pt-2 border-t border-slate-800">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-extrabold text-slate-700">UTILIDAD OPERACIONAL MERCANEX:</span>
-                <span className={`text-lg font-mono font-extrabold ${isProfitable ? 'text-emerald-600' : 'text-amber-600'}`}>
+                <span className="text-xs font-bold text-slate-300">UTILIDAD OPERACIONAL MERCANEX:</span>
+                <span className={`text-lg font-mono font-extrabold ${isProfitable ? 'text-emerald-400' : 'text-amber-400'}`}>
                   {netPlatformProfit >= 0 ? '+' : ''}{formatCOP(netPlatformProfit)} / mes
                 </span>
               </div>
 
-              <div className={`p-3 rounded-lg text-xs font-semibold flex items-center gap-2 border ${
+              <div className={`p-3 rounded-xl text-xs font-semibold flex items-center gap-2 border ${
                 isProfitable
-                  ? 'bg-emerald-100/70 border-emerald-300 text-emerald-900'
-                  : 'bg-amber-100/70 border-amber-300 text-amber-900'
+                  ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+                  : 'bg-amber-500/10 border-amber-500/30 text-amber-300'
               }`}>
-                {isProfitable ? <CheckCircle2 className="w-4 h-4 text-emerald-600" /> : <AlertTriangle className="w-4 h-4 text-amber-600" />}
+                {isProfitable ? <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" /> : <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />}
                 {isProfitable ? (
                   <span>
                     <strong>PUNTO DE EQUILIBRIO SUPERADO:</strong> Los ingresos por planes SaaS cubren el 100% de los costos operativos del servidor.

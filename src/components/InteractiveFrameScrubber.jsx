@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Film, Play, ChevronLeft, ChevronRight, CheckCircle2, Lock, ShoppingCart, CreditCard, MessageSquare, Terminal } from 'lucide-react';
+import { sound } from '../lib/soundSynthesizer';
 
 export default function InteractiveFrameScrubber() {
   const [currentFrame, setCurrentFrame] = useState(0);
@@ -89,36 +90,41 @@ export default function InteractiveFrameScrubber() {
   const current = frames[currentFrame];
   const IconComponent = current.icon;
 
+  const handleSetFrame = (index) => {
+    sound.click();
+    setCurrentFrame(index);
+  };
+
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-card space-y-5" id="interactive-motion">
+    <div className="bg-[#0B101B] border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-5" id="interactive-motion">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
         <div>
-          <span className="text-xs font-extrabold uppercase tracking-wider text-emerald-600 block mb-0.5">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 block mb-0.5">
             Descomposición Fotograma a Fotograma
           </span>
-          <h3 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-            <Film className="w-5 h-5 text-emerald-500" />
-            Motion Scrubber: Ciclo Transaccional Completo de Mercanex
+          <h3 className="text-xl font-bold text-white flex items-center gap-2">
+            <Film className="w-5 h-5 text-emerald-400" />
+            <span>Motion Scrubber: Ciclo Transaccional Completo de Mercanex</span>
           </h3>
         </div>
 
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setCurrentFrame(prev => Math.max(0, prev - 1))}
+            onClick={() => handleSetFrame(Math.max(0, currentFrame - 1))}
             disabled={currentFrame === 0}
-            className="p-2 border border-slate-200 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent text-slate-700 transition-colors"
+            className="p-2 border border-slate-700 bg-slate-900 rounded-xl hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-slate-900 text-slate-300 transition"
             title="Fotograma anterior"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
-          <span className="text-xs font-bold text-slate-700 px-2 font-mono">
+          <span className="text-xs font-mono font-bold text-slate-300 px-2">
             {current.step}
           </span>
           <button
-            onClick={() => setCurrentFrame(prev => Math.min(frames.length - 1, prev + 1))}
+            onClick={() => handleSetFrame(Math.min(frames.length - 1, currentFrame + 1))}
             disabled={currentFrame === frames.length - 1}
-            className="p-2 border border-slate-200 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent text-slate-700 transition-colors"
+            className="p-2 border border-slate-700 bg-slate-900 rounded-xl hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-slate-900 text-slate-300 transition"
             title="Fotograma siguiente"
           >
             <ChevronRight className="w-4 h-4" />
@@ -126,54 +132,54 @@ export default function InteractiveFrameScrubber() {
         </div>
       </div>
 
-      {/* Barra de Progreso del Scrubber */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between text-xs font-bold text-slate-500">
+      {/* Scrubber Progress Bar */}
+      <div className="space-y-2 font-mono text-xs">
+        <div className="flex items-center justify-between text-slate-400 text-[11px]">
           <span>INICIO DE COMPRA</span>
-          <span className="text-emerald-600 font-extrabold">{current.title}</span>
+          <span className="text-emerald-400 font-bold">{current.title}</span>
           <span>DESPACHO SEGURO</span>
         </div>
         <div className="grid grid-cols-5 gap-1.5">
           {frames.map((f, i) => (
             <button
               key={f.id}
-              onClick={() => setCurrentFrame(i)}
-              className={`h-2.5 rounded-full transition-all duration-200 ${
+              onClick={() => handleSetFrame(i)}
+              className={`h-2 rounded-full transition-all duration-200 ${
                 i === currentFrame
-                  ? 'bg-emerald-600 shadow-xs'
+                  ? 'bg-emerald-400 shadow-[0_0_8px_rgba(0,245,155,0.8)]'
                   : i < currentFrame
-                  ? 'bg-emerald-300'
-                  : 'bg-slate-200 hover:bg-slate-300'
+                  ? 'bg-emerald-500/40'
+                  : 'bg-slate-800 hover:bg-slate-700'
               }`}
             />
           ))}
         </div>
       </div>
 
-      {/* Contenido del Fotograma Activo */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-slate-50 border border-slate-200 rounded-xl p-5">
-        {/* Columna Izquierda: Explicación y Estado */}
+      {/* Frame Active Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-[#06090F] border border-slate-800/80 rounded-2xl p-5">
+        {/* Left Column: Description & State */}
         <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 text-xs font-bold text-emerald-800 bg-emerald-100 rounded-full border border-emerald-300">
+            <span className="px-2.5 py-0.5 text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
               {current.badge}
             </span>
-            <span className="px-2 py-0.5 text-[11px] font-mono font-bold text-slate-600 bg-white border border-slate-200 rounded">
+            <span className="px-2 py-0.5 text-[11px] font-mono font-bold text-slate-300 bg-slate-900 border border-slate-700 rounded">
               {current.status}
             </span>
           </div>
 
-          <h4 className="text-xl font-bold text-slate-900 leading-snug flex items-center gap-2">
-            <IconComponent className="w-5 h-5 text-emerald-600" />
+          <h4 className="text-xl font-bold text-white leading-snug flex items-center gap-2">
+            <IconComponent className="w-5 h-5 text-emerald-400" />
             {current.title}
           </h4>
 
-          <p className="text-sm text-slate-600 leading-relaxed">
+          <p className="text-sm text-slate-300 leading-relaxed">
             {current.desc}
           </p>
 
-          {/* Consola de Código / SQL Log */}
-          <div className="bg-slate-900 rounded-lg p-3 text-xs text-emerald-300 font-mono overflow-x-auto shadow-inner">
+          {/* Code Console / SQL Log */}
+          <div className="bg-[#0B101B] border border-slate-800 rounded-xl p-3 text-xs text-emerald-300 font-mono overflow-x-auto shadow-inner">
             <div className="flex items-center gap-1.5 text-slate-400 text-[10px] mb-1.5 border-b border-slate-800 pb-1">
               <Terminal className="w-3 h-3 text-emerald-400" />
               <span>Registro de Evento en Backend</span>
@@ -182,38 +188,38 @@ export default function InteractiveFrameScrubber() {
           </div>
         </div>
 
-        {/* Columna Derecha: Representación Visual de Datos */}
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs flex flex-col justify-between">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">
+        {/* Right Column: Visual Entity Data */}
+        <div className="bg-[#0B101B] border border-slate-800 rounded-xl p-5 shadow-xl flex flex-col justify-between">
+          <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider block mb-2">
             Estado de Memoria y Entidades Transaccionales
           </span>
 
-          <div className="space-y-2.5">
+          <div className="space-y-2.5 font-mono text-xs">
             {current.visual.items && (
               <div className="space-y-1">
-                <span className="text-xs font-semibold text-slate-700">Ítems Multi-Vendedor:</span>
+                <span className="text-xs font-semibold text-slate-300">Ítems Multi-Vendedor:</span>
                 {current.visual.items.map((it, idx) => (
-                  <div key={idx} className="p-2 bg-slate-50 border border-slate-200 rounded text-xs font-medium text-slate-800 flex items-center justify-between">
+                  <div key={idx} className="p-2 bg-[#06090F] border border-slate-800 rounded-lg text-xs font-medium text-slate-200 flex items-center justify-between">
                     <span>{it}</span>
-                    <span className="text-emerald-600 font-bold">✓</span>
+                    <span className="text-emerald-400 font-bold">✓</span>
                   </div>
                 ))}
               </div>
             )}
 
             {current.visual.status && (
-              <div className="p-3 bg-amber-50 border border-amber-200 rounded text-xs text-amber-900 font-medium">
-                <strong>{current.visual.status}</strong>
-                <div className="text-[11px] text-amber-700 mt-1">{current.visual.ttl}</div>
+              <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-200 font-medium">
+                <strong className="text-amber-300">{current.visual.status}</strong>
+                <div className="text-[11px] text-amber-400 mt-1">{current.visual.ttl}</div>
               </div>
             )}
 
             {current.visual.signatureMatch && (
               <div className="space-y-1.5">
-                <div className="p-2.5 bg-blue-50 border border-blue-200 rounded text-xs text-blue-900 font-mono">
+                <div className="p-2.5 bg-blue-500/10 border border-blue-500/30 rounded-xl text-xs text-blue-300 font-mono">
                   {current.visual.signatureMatch}
                 </div>
-                <div className="text-xs text-slate-500 font-mono">
+                <div className="text-xs text-slate-400 font-mono">
                   {current.visual.idempotencyCheck}
                 </div>
               </div>
@@ -221,9 +227,9 @@ export default function InteractiveFrameScrubber() {
 
             {current.visual.suborders && (
               <div className="space-y-1">
-                <span className="text-xs font-bold text-emerald-800">Subórdenes Creadas:</span>
+                <span className="text-xs font-bold text-emerald-400">Subórdenes Creadas:</span>
                 {current.visual.suborders.map((sub, idx) => (
-                  <div key={idx} className="p-2 bg-emerald-50 border border-emerald-200 rounded text-xs font-mono font-bold text-emerald-900">
+                  <div key={idx} className="p-2 bg-emerald-500/10 border border-emerald-500/25 rounded-lg text-xs font-mono font-bold text-emerald-300">
                     {sub}
                   </div>
                 ))}
@@ -232,23 +238,23 @@ export default function InteractiveFrameScrubber() {
 
             {current.visual.keysRevealed && (
               <div className="space-y-2">
-                <div className="p-3 bg-purple-50 border border-purple-200 rounded text-xs text-purple-900 font-bold">
+                <div className="p-3 bg-purple-500/10 border border-purple-500/30 rounded-xl text-xs text-purple-300 font-bold">
                   ✓ {current.visual.keysRevealed}
                 </div>
-                <div className="text-xs text-slate-600 flex items-center justify-between font-mono">
+                <div className="text-xs text-slate-300 flex items-center justify-between font-mono">
                   <span>Canal WSS:</span>
-                  <span className="text-emerald-600 font-bold">{current.visual.webSocketsChannel}</span>
+                  <span className="text-emerald-400 font-bold">{current.visual.webSocketsChannel}</span>
                 </div>
-                <div className="text-xs text-slate-500">
-                  Latencia P95: <strong>{current.visual.slaLatency}</strong>
+                <div className="text-xs text-slate-400">
+                  Latencia P95: <strong className="text-white">{current.visual.slaLatency}</strong>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+          <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400">
             <span>Mercanex State Engine v3.0</span>
-            <span className="font-bold text-emerald-600">Paso {currentFrame + 1} de 5</span>
+            <span className="font-bold text-emerald-400">Paso {currentFrame + 1} de 5</span>
           </div>
         </div>
       </div>
