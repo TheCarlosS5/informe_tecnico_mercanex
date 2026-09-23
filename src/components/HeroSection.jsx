@@ -72,18 +72,18 @@ export default function HeroSection({ onSelectTerm, onOpenLightbox }) {
           <span className="text-sm font-bold text-slate-900 block">Mercanex Marketplace de Claves Digitales</span>
         </div>
         <div>
-          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Equipo Desarrollador (ADSO)</span>
+          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Equipo Desarrollador (5 Aprendices)</span>
           <span className="text-sm font-semibold text-emerald-700 block">
-            Carlos Morales • Sergio Cuervo • Santiago Garcia • David Rodriguez • Santiago Henao
+            Carlos Gutiérrez • Camilo Tamayo • Kevin Martínez • Samuel Ramírez • Santiago Ortiz
           </span>
         </div>
         <div>
           <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Centro de Formación</span>
-          <span className="text-sm font-semibold text-slate-800 block">SENA Regional Antioquia • Ficha 2977494</span>
+          <span className="text-sm font-semibold text-slate-800 block">SENA Regional Huila (CIES) • Ficha 3407799</span>
         </div>
         <div>
-          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Fecha de Sustentación</span>
-          <span className="text-sm font-semibold text-slate-800 block">Septiembre 2026</span>
+          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Instructor Líder</span>
+          <span className="text-sm font-semibold text-slate-800 block">José de Jesús Motta Vargas</span>
         </div>
       </div>
 

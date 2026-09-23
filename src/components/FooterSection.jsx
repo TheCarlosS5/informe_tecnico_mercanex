@@ -17,11 +17,11 @@ export default function FooterSection() {
             </span>
           </div>
           <p className="text-slate-600">
-            Tecnología en Análisis y Desarrollo de Software • Ficha 2977494 • Centro de Servicios y Gestión Empresarial
+            Tecnología en Análisis y Desarrollo de Software • Ficha 3407799 • Centro de la Industria, la Empresa y los Servicios (CIES) — Regional Huila
           </p>
           <p className="text-slate-400">
-            Desarrollado con rigor de ingeniería por:{' '}
-            <strong className="text-slate-700">Carlos Morales, Sergio Cuervo, Santiago Garcia, David Rodriguez, Santiago Henao</strong>
+            Equipo Desarrollador:{' '}
+            <strong className="text-slate-700">Carlos Stiven Gutiérrez, Camilo Andrés Tamayo, Kevin Fernando Martínez, Samuel Santiago Ramírez, Santiago Ortiz Claros</strong> • Instructor: <strong className="text-slate-700">José de Jesús Motta Vargas</strong>
           </p>
         </div>
 
