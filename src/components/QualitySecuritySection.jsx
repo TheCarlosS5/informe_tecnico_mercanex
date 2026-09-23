@@ -1,8 +1,32 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import TechTerm from './TechTerm';
-import { ShieldAlert, CheckCircle2, Cpu, Zap, Lock, Terminal } from 'lucide-react';
+import { ShieldAlert, CheckCircle2, Cpu, Zap, Lock, Terminal, Search, CheckSquare, ChevronRight, Layers, FileCheck } from 'lucide-react';
+import inventory from '../data/mercanex_semantic_inventory.json';
+import { sound } from '../lib/soundSynthesizer';
 
 export default function QualitySecuritySection({ onSelectTerm }) {
+  const [qaSearch, setQaSearch] = useState('');
+  const [selectedTestCase, setSelectedTestCase] = useState(null);
+
+  const testCases = inventory.test_cases || [];
+
+  const filteredTestCases = useMemo(() => {
+    return testCases.filter((tc) => {
+      const q = qaSearch.toLowerCase();
+      return (
+        tc.id.toLowerCase().includes(q) ||
+        tc.title.toLowerCase().includes(q) ||
+        tc.reference.toLowerCase().includes(q) ||
+        tc.expected_result.toLowerCase().includes(q)
+      );
+    });
+  }, [testCases, qaSearch]);
+
+  const handleSelectTC = (tc) => {
+    sound.click();
+    setSelectedTestCase(tc);
+  };
+
   return (
     <section className="space-y-6" id="cap9-qa">
       <div className="border-b border-slate-800 pb-4">
@@ -138,6 +162,154 @@ export default function QualitySecuritySection({ onSelectTerm }) {
           </table>
         </div>
       </div>
+
+      {/* PLAN OFICIAL DE PRUEBAS DE CALIDAD (QA) • 20 CASOS DE PRUEBA (CP-01 a CP-20) */}
+      <div className="bg-[#0B101B] border border-slate-800 rounded-2xl overflow-hidden shadow-2xl space-y-4 p-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-800 pb-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <FileCheck className="w-5 h-5 text-emerald-400" />
+              <h3 className="text-lg font-bold text-white">
+                Plan Oficial de Pruebas de Calidad (QA) • 20 Casos de Prueba (CP-01 a CP-20)
+              </h3>
+            </div>
+            <p className="text-xs text-slate-400 mt-1">
+              Matriz completa de verificación funcional y no funcional definida en la especificación técnica SRS de Mercanex.
+            </p>
+          </div>
+
+          <div className="relative w-full sm:w-64">
+            <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              value={qaSearch}
+              onChange={(e) => setQaSearch(e.target.value)}
+              placeholder="Buscar caso (ej: CP-06, 2FA, Split)..."
+              className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#06090F] border border-slate-700/80 rounded-xl text-white font-mono placeholder:text-slate-500 focus:outline-none focus:border-emerald-400 shadow-inner"
+            />
+          </div>
+        </div>
+
+        {/* Tabla Interactiva de Casos de Prueba */}
+        <div className="overflow-x-auto rounded-xl border border-slate-800/80">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-[#06090F] text-slate-400 font-mono border-b border-slate-800">
+              <tr>
+                <th className="p-3 font-bold w-20">ID</th>
+                <th className="p-3 font-bold w-1/4">Título del Caso</th>
+                <th className="p-3 font-bold w-1/5 text-emerald-400">Requerimiento Vinculado</th>
+                <th className="p-3 font-bold">Resultado Esperado / Criterio de Aceptación</th>
+                <th className="p-3 font-bold w-28 text-right">Acción</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800/60 text-slate-300">
+              {filteredTestCases.length === 0 ? (
+                <tr>
+                  <td colSpan="5" className="p-6 text-center text-slate-500 font-mono">
+                    No se encontraron casos de prueba para el criterio "{qaSearch}".
+                  </td>
+                </tr>
+              ) : (
+                filteredTestCases.map((tc) => (
+                  <tr 
+                    key={tc.id}
+                    onClick={() => handleSelectTC(tc)}
+                    className="hover:bg-slate-800/40 cursor-pointer transition-colors group"
+                  >
+                    <td className="p-3 font-mono font-bold text-emerald-400 group-hover:text-emerald-300">
+                      {tc.id}
+                    </td>
+                    <td className="p-3 font-bold text-white font-sans">
+                      {tc.title}
+                    </td>
+                    <td className="p-3 font-mono text-cyan-400 text-[11px]">
+                      {tc.reference}
+                    </td>
+                    <td className="p-3 text-slate-300 text-xs">
+                      {tc.expected_result}
+                    </td>
+                    <td className="p-3 text-right">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleSelectTC(tc);
+                        }}
+                        className="px-2.5 py-1 text-[11px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-lg hover:bg-emerald-500/20 transition"
+                      >
+                        Examinar
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between text-xs font-mono text-slate-400 pt-2">
+          <span>Mostrando {filteredTestCases.length} de {testCases.length} Casos de Prueba Formales</span>
+          <span className="text-emerald-400 font-bold">Cobertura SRS: 100% (20/20 Casos)</span>
+        </div>
+      </div>
+
+      {/* Modal Inspector de Caso de Prueba */}
+      {selectedTestCase && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn"
+          onClick={() => setSelectedTestCase(null)}
+        >
+          <div 
+            className="bg-[#0B101B] border border-emerald-500/40 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-1 font-mono font-black text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
+                  {selectedTestCase.id}
+                </span>
+                <h4 className="text-base font-bold text-white">
+                  {selectedTestCase.title}
+                </h4>
+              </div>
+              <button
+                onClick={() => setSelectedTestCase(null)}
+                className="text-slate-400 hover:text-white p-1 rounded-lg text-lg leading-none"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-3 font-mono text-xs">
+              <div className="p-3 bg-[#06090F] border border-slate-800 rounded-xl space-y-1">
+                <span className="text-[10px] text-slate-500 uppercase tracking-wider block">Requerimiento SRS Asociado:</span>
+                <span className="text-sm font-bold text-cyan-400">{selectedTestCase.reference}</span>
+              </div>
+
+              <div className="p-3 bg-[#06090F] border border-slate-800 rounded-xl space-y-1 font-sans">
+                <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono block">Resultado Esperado / Aceptación:</span>
+                <p className="text-sm text-slate-200 leading-relaxed">{selectedTestCase.expected_result}</p>
+              </div>
+
+              <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] text-emerald-400 uppercase tracking-wider block">Estado de Especificación:</span>
+                  <span className="text-xs font-bold text-emerald-300">Auditado y Verificado en SRS V3.0</span>
+                </div>
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+              </div>
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <button
+                onClick={() => setSelectedTestCase(null)}
+                className="px-4 py-1.5 text-xs font-mono font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl transition"
+              >
+                Cerrar Ficha
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

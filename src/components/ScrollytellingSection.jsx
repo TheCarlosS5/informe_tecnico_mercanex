@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import TechTerm from './TechTerm';
 import { sound } from '../lib/soundSynthesizer';
+import { scrollToAnchor } from '../lib/smoothScroll';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -207,7 +208,7 @@ export default function ScrollytellingSection({ onSelectTerm }) {
                 playsInline
                 className="w-full h-full object-cover opacity-60 filter contrast-125 brightness-90"
               >
-                <source src="/assets/videos/digital_code_stream.mp4" type="video/mp4" />
+                <source src="assets/videos/digital_code_stream.mp4" type="video/mp4" />
               </video>
               
               {/* Scanline & Vignette */}
@@ -268,11 +269,16 @@ export default function ScrollytellingSection({ onSelectTerm }) {
                 <span>FASE {activeStationIndex + 1} DE {narrativeStations.length}</span>
                 <div className="flex gap-1.5">
                   {narrativeStations.map((st, idx) => (
-                    <div 
-                      key={st.id} 
-                      className={`h-1.5 rounded-full transition-all duration-300 ${
-                        idx === activeStationIndex ? 'w-6 bg-emerald-400' : 'w-2 bg-slate-800'
+                    <button
+                      key={st.id}
+                      onClick={() => {
+                        sound.click();
+                        scrollToAnchor(`#station-${st.id}`);
+                      }}
+                      className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                        idx === activeStationIndex ? 'w-6 bg-emerald-400' : 'w-2 bg-slate-800 hover:bg-slate-700'
                       }`}
+                      title={`Ir a Estación ${st.stepNumber}: ${st.title}`}
                     />
                   ))}
                 </div>
@@ -335,8 +341,7 @@ export default function ScrollytellingSection({ onSelectTerm }) {
                     onClick={() => {
                       sound.ping();
                       const next = (index + 1) % narrativeStations.length;
-                      const nextEl = document.getElementById(`station-${narrativeStations[next].id}`);
-                      if (nextEl) nextEl.scrollIntoView({ behavior: 'smooth' });
+                      scrollToAnchor(`#station-${narrativeStations[next].id}`);
                     }}
                     className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-emerald-400 hover:text-emerald-300 transition"
                   >

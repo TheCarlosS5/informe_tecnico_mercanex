@@ -21,10 +21,11 @@ import TermModal from './components/TermModal';
 import DictionaryDrawer from './components/DictionaryDrawer';
 import LightboxModal from './components/LightboxModal';
 import CommandPalette from './components/CommandPalette';
-import { initSmoothScroll } from './lib/smoothScroll';
+import { initSmoothScroll, scrollToAnchor } from './lib/smoothScroll';
 
 export default function App() {
   const [selectedTerm, setSelectedTerm] = useState(null);
+  const [selectedERFForModal, setSelectedERFForModal] = useState(null);
   const [isDictionaryOpen, setIsDictionaryOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isPresentationMode, setIsPresentationMode] = useState(false);
@@ -53,10 +54,8 @@ export default function App() {
   };
 
   const handleNavigateSection = (sectionId) => {
-    const el = document.getElementById(sectionId);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+    const selector = sectionId.startsWith('#') ? sectionId : `#${sectionId}`;
+    scrollToAnchor(selector);
   };
 
   return (
@@ -98,6 +97,8 @@ export default function App() {
         <RequirementsExplorer
           onOpenLightbox={handleOpenLightbox}
           onSelectTerm={setSelectedTerm}
+          activeERFProp={selectedERFForModal}
+          onCloseActiveERF={() => setSelectedERFForModal(null)}
         />
 
         {/* CAPÍTULO 06: Catálogo Completo de Mockups UI/UX (72 Pantallas) */}
@@ -134,6 +135,7 @@ export default function App() {
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
         onSelectERF={(erf) => {
+          setSelectedERFForModal(erf);
           handleNavigateSection('requirements-section');
         }}
         onOpenLightbox={handleOpenLightbox}

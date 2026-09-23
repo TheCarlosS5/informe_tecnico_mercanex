@@ -5,6 +5,13 @@ import { sound } from '../lib/soundSynthesizer';
 export default function SplitPipelineCanvas() {
   const canvasRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [resetKey, setResetKey] = useState(0);
+
+  const handleReset = () => {
+    sound.ping();
+    setIsPlaying(true);
+    setResetKey(prev => prev + 1);
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -38,6 +45,11 @@ export default function SplitPipelineCanvas() {
         color: "#00F59B"
       });
     };
+
+    // Initial particle burst
+    for (let k = 0; k < 5; k++) {
+      createParticle();
+    }
 
     let tick = 0;
 
@@ -174,7 +186,7 @@ export default function SplitPipelineCanvas() {
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [isPlaying]);
+  }, [isPlaying, resetKey]);
 
   return (
     <div className="bg-[#0B101B] border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
@@ -191,6 +203,15 @@ export default function SplitPipelineCanvas() {
         </div>
 
         <div className="flex items-center gap-2">
+          <button
+            onClick={handleReset}
+            className="px-3 py-1.5 rounded-xl text-xs font-mono font-bold flex items-center gap-1.5 transition bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white hover:bg-slate-700/80"
+            title="Reiniciar partículas transaccionales"
+          >
+            <RotateCcw className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Reiniciar</span>
+          </button>
+
           <button
             onClick={() => {
               sound.click();

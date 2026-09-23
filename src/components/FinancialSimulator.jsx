@@ -130,6 +130,44 @@ export default function FinancialSimulator({ onSelectTerm }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Controles */}
           <div className="space-y-5 font-mono">
+            {/* Presets de Escenario Rápido */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[10px] text-slate-500 uppercase tracking-wider block w-full">Escenarios Preconfigurados:</span>
+              <button
+                onClick={() => {
+                  sound.click();
+                  setGmv(5000000);
+                  setProStores(3);
+                  setPlusBuyers(8);
+                }}
+                className="px-2.5 py-1 text-xs bg-slate-900 border border-slate-700/80 rounded-lg text-slate-300 hover:text-emerald-400 hover:border-emerald-500/40 transition"
+              >
+                🌱 Fase Semilla
+              </button>
+              <button
+                onClick={() => {
+                  sound.click();
+                  setGmv(15000000);
+                  setProStores(10);
+                  setPlusBuyers(25);
+                }}
+                className="px-2.5 py-1 text-xs bg-slate-900 border border-slate-700/80 rounded-lg text-slate-300 hover:text-emerald-400 hover:border-emerald-500/40 transition"
+              >
+                🚀 Crecimiento (Base)
+              </button>
+              <button
+                onClick={() => {
+                  sound.click();
+                  setGmv(45000000);
+                  setProStores(35);
+                  setPlusBuyers(90);
+                }}
+                className="px-2.5 py-1 text-xs bg-slate-900 border border-slate-700/80 rounded-lg text-slate-300 hover:text-emerald-400 hover:border-emerald-500/40 transition"
+              >
+                ⭐ Escala Nacional
+              </button>
+            </div>
+
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="text-xs font-bold text-slate-300">

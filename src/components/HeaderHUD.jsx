@@ -4,6 +4,7 @@ import {
   Sparkles, Layers, GitMerge, ShieldCheck, Terminal, Compass
 } from 'lucide-react';
 import { sound } from '../lib/soundSynthesizer';
+import { scrollToAnchor } from '../lib/smoothScroll';
 
 export default function HeaderHUD({ 
   onOpenDictionary, 
@@ -38,6 +39,12 @@ export default function HeaderHUD({
     setIsAudioMuted(nextMuted);
   };
 
+  const handleNavClick = (e, targetId) => {
+    e.preventDefault();
+    sound.click();
+    scrollToAnchor(targetId);
+  };
+
   return (
     <header className="sticky top-0 z-40 bg-[#06090F]/90 backdrop-blur-md border-b border-slate-800/80 shadow-2xl">
       {/* Dynamic Scroll Progress Bar in Neon Emerald */}
@@ -48,8 +55,12 @@ export default function HeaderHUD({
 
       <div className="max-w-[1520px] mx-auto px-4 md:px-6 py-2.5 flex items-center justify-between gap-4">
         {/* Brand & SENA Institutional Telemetry */}
-        <div className="flex items-center gap-3 shrink-0">
-          <div className="flex items-center gap-2 px-3 py-1 bg-slate-900/90 text-white rounded-xl font-mono text-xs tracking-tight shadow-sm border border-emerald-500/30">
+        <div 
+          onClick={(e) => handleNavClick(e, '#root')}
+          className="flex items-center gap-3 shrink-0 cursor-pointer group"
+          title="Ir al inicio"
+        >
+          <div className="flex items-center gap-2 px-3 py-1 bg-slate-900/90 text-white rounded-xl font-mono text-xs tracking-tight shadow-sm border border-emerald-500/30 group-hover:border-emerald-400 transition">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#00F59B]" />
             <span className="font-black text-emerald-400">MERCANEX</span>
             <span className="text-slate-400 font-bold">V3.0</span>
@@ -60,44 +71,77 @@ export default function HeaderHUD({
           </div>
         </div>
 
-        {/* Global Navigation Chapter Rail */}
+        {/* Global Navigation Chapter Rail (with smooth Lenis scroll and offset) */}
         <nav className="hidden xl:flex items-center gap-1 text-xs font-mono text-slate-400 overflow-x-auto py-1">
-          <a href="#scrollytelling-narrative" className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition">
+          <button 
+            onClick={(e) => handleNavClick(e, '#scrollytelling-narrative')} 
+            className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition"
+          >
             01/02 Scrollytelling
-          </a>
-          <a href="#video-infrastructure-scroll" className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition">
+          </button>
+          <button 
+            onClick={(e) => handleNavClick(e, '#video-infrastructure-scroll')} 
+            className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition"
+          >
             03 Arquitectura
-          </a>
-          <a href="#horizontal-pipeline" className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition flex items-center gap-1 text-emerald-400 font-bold">
+          </button>
+          <button 
+            onClick={(e) => handleNavClick(e, '#horizontal-pipeline')} 
+            className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition flex items-center gap-1 text-emerald-400 font-bold"
+          >
             <Sparkles className="w-3 h-3 text-emerald-400" />
             <span>04 Pipeline Split</span>
-          </a>
-          <a href="#requirements-section" className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition flex items-center gap-1 text-slate-200 font-bold">
+          </button>
+          <button 
+            onClick={(e) => handleNavClick(e, '#requirements-section')} 
+            className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition flex items-center gap-1 text-slate-200 font-bold"
+          >
             <Layers className="w-3 h-3 text-emerald-400" />
             <span>05 72 ERFs</span>
-          </a>
-          <a href="#cap4-mockups" className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition">
+          </button>
+          <button 
+            onClick={(e) => handleNavClick(e, '#cap4-mockups')} 
+            className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition"
+          >
             06 Mockups (72)
-          </a>
-          <a href="#cap5-diagramas" className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition">
+          </button>
+          <button 
+            onClick={(e) => handleNavClick(e, '#cap5-diagramas')} 
+            className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition"
+          >
             07 Diagramas (16)
-          </a>
-          <a href="#cap6-der" className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition">
+          </button>
+          <button 
+            onClick={(e) => handleNavClick(e, '#cap6-der')} 
+            className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition"
+          >
             08 BD (15 Tablas)
-          </a>
-          <a href="#traceability-section" className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition flex items-center gap-1 text-slate-200 font-bold">
+          </button>
+          <button 
+            onClick={(e) => handleNavClick(e, '#traceability-section')} 
+            className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition flex items-center gap-1 text-slate-200 font-bold"
+          >
             <GitMerge className="w-3 h-3 text-emerald-400" />
             <span>09 Trazabilidad</span>
-          </a>
-          <a href="#cap7-costos" className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition">
+          </button>
+          <button 
+            onClick={(e) => handleNavClick(e, '#cap7-costos')} 
+            className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition"
+          >
             10 Costos
-          </a>
-          <a href="#cap8-legal" className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition">
+          </button>
+          <button 
+            onClick={(e) => handleNavClick(e, '#cap8-legal')} 
+            className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition"
+          >
             11 Legal
-          </a>
-          <a href="#cap9-qa" className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition">
+          </button>
+          <button 
+            onClick={(e) => handleNavClick(e, '#cap9-qa')} 
+            className="px-2.5 py-1 rounded-lg hover:text-emerald-400 hover:bg-slate-900 transition"
+          >
             12 QA
-          </a>
+          </button>
         </nav>
 
         {/* Global Action Utilities */}

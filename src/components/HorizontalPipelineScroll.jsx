@@ -158,7 +158,19 @@ const pipelineStages = [
 export default function HorizontalPipelineScroll() {
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
+  const scrollTriggerRef = useRef(null);
   const [selectedStage, setSelectedStage] = useState(0);
+
+  const handleStageSelect = (idx) => {
+    sound.click();
+    setSelectedStage(idx);
+    const st = scrollTriggerRef.current;
+    if (st && st.start !== undefined && st.end !== undefined) {
+      const targetProgress = idx / (pipelineStages.length - 1);
+      const targetScroll = st.start + targetProgress * (st.end - st.start);
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    }
+  };
 
   useGSAP(() => {
     const track = trackRef.current;
@@ -187,6 +199,8 @@ export default function HorizontalPipelineScroll() {
         }
       }
     });
+
+    scrollTriggerRef.current = tween.scrollTrigger;
 
   }, { scope: sectionRef });
 
@@ -240,10 +254,7 @@ export default function HorizontalPipelineScroll() {
             return (
               <div
                 key={stage.id}
-                onClick={() => {
-                  sound.click();
-                  setSelectedStage(idx);
-                }}
+                onClick={() => handleStageSelect(idx)}
                 className={`w-[85vw] sm:w-[480px] lg:w-[520px] flex-shrink-0 p-6 sm:p-7 rounded-2xl border transition-all duration-300 flex flex-col justify-between cursor-pointer ${
                   isSelected 
                     ? 'bg-[#0B101B] border-emerald-500/60 shadow-2xl shadow-emerald-950/30 ring-1 ring-emerald-500/30' 
@@ -322,7 +333,7 @@ export default function HorizontalPipelineScroll() {
       <div className="relative z-10 px-6 sm:px-12 flex flex-wrap items-center justify-between gap-4 border-t border-slate-800/80 pt-3 text-xs font-mono text-slate-400">
         <div className="flex items-center gap-2">
           <span className="text-slate-500">CONTROL DE DESPLAZAMIENTO:</span>
-          <span className="text-emerald-400 font-bold">Usa el Scroll Vertical para desplazar la cinta horizontalmente</span>
+          <span className="text-emerald-400 font-bold">Usa el Scroll Vertical o haz clic en las etapas</span>
         </div>
 
         {/* Stage Dot Markers */}
@@ -330,10 +341,7 @@ export default function HorizontalPipelineScroll() {
           {pipelineStages.map((st, i) => (
             <button
               key={st.id}
-              onClick={() => {
-                sound.click();
-                setSelectedStage(i);
-              }}
+              onClick={() => handleStageSelect(i)}
               className={`h-2 rounded-full transition-all duration-300 ${
                 i === selectedStage 
                   ? 'w-8 bg-emerald-400' 

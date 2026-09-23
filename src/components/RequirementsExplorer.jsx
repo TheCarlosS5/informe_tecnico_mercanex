@@ -19,16 +19,24 @@ const MODULES = [
   { id: 'RF-08', name: 'RF-08: Administración y Control', count: 10, icon: Layers },
 ];
 
-export default function RequirementsExplorer({ onOpenLightbox, onSelectTerm }) {
+export default function RequirementsExplorer({ onOpenLightbox, onSelectTerm, activeERFProp, onCloseActiveERF }) {
   const [selectedModule, setSelectedModule] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeERF, setActiveERF] = useState(null);
+  const [localActiveERF, setLocalActiveERF] = useState(null);
   const [flowSimulator, setFlowSimulator] = useState({
     isOpen: false,
     erf: null,
     currentStep: 0,
     isPlaying: false
   });
+
+  const activeERF = activeERFProp || localActiveERF;
+  const setActiveERF = (erf) => {
+    setLocalActiveERF(erf);
+    if (!erf && onCloseActiveERF) {
+      onCloseActiveERF();
+    }
+  };
 
   // Filter ERFs
   const filteredERFs = useMemo(() => {
@@ -47,7 +55,6 @@ export default function RequirementsExplorer({ onOpenLightbox, onSelectTerm }) {
   // Parse flow steps from mainFlow string
   const parseFlowSteps = (flowStr) => {
     if (!flowStr) return [];
-    // Matches patterns like "1. Step text. 2. Next text."
     const parts = flowStr.split(/(?=\b\d+\.\s+)/).map(s => s.trim()).filter(Boolean);
     return parts.map((step, idx) => {
       const clean = step.replace(/^\d+\.\s*/, '');
@@ -56,7 +63,7 @@ export default function RequirementsExplorer({ onOpenLightbox, onSelectTerm }) {
   };
 
   const handleOpenFlowPlayer = (erf) => {
-    sound.playChime(580, 0.15);
+    sound.ping();
     setFlowSimulator({
       isOpen: true,
       erf,
@@ -69,97 +76,97 @@ export default function RequirementsExplorer({ onOpenLightbox, onSelectTerm }) {
     if (!flowSimulator.erf) return;
     const steps = parseFlowSteps(flowSimulator.erf['flujo principal']);
     if (flowSimulator.currentStep < steps.length - 1) {
-      sound.playClick();
+      sound.click();
       setFlowSimulator(prev => ({ ...prev, currentStep: prev.currentStep + 1 }));
     } else {
-      sound.playSuccess();
+      sound.success();
       setFlowSimulator(prev => ({ ...prev, isPlaying: false }));
     }
   };
 
   const handleStepPrev = () => {
     if (flowSimulator.currentStep > 0) {
-      sound.playClick();
+      sound.click();
       setFlowSimulator(prev => ({ ...prev, currentStep: prev.currentStep - 1 }));
     }
   };
 
   const handleResetFlow = () => {
-    sound.playClick();
+    sound.click();
     setFlowSimulator(prev => ({ ...prev, currentStep: 0, isPlaying: false }));
   };
 
   return (
     <section id="requirements-section" className="scroll-mt-24 space-y-8">
       {/* Chapter Title & Header */}
-      <div className="border-b border-slate-200 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="border-b border-slate-800 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-emerald-600 font-mono text-xs uppercase tracking-wider font-semibold mb-2">
+          <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs uppercase tracking-wider font-semibold mb-2">
             <Layers className="w-4 h-4" />
             <span>Capítulo 05 • Especificación Formal IEEE 830</span>
           </div>
-          <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
             Explorador Interactivo de Requisitos Funcionales (72 ERF)
           </h2>
-          <p className="text-slate-600 text-sm max-w-3xl mt-1.5 leading-relaxed">
+          <p className="text-slate-400 text-sm max-w-3xl mt-1.5 leading-relaxed">
             Catálogo completo de especificaciones de ingeniería derivadas del SRS oficial. Cada ERF cuenta con actores, precondiciones, flujo algorítmico, reglas de negocio inmutables, criterios de aceptación y vinculación directa con su respectivo mockup.
           </p>
         </div>
         <div className="flex items-center gap-2 self-start md:self-auto shrink-0">
-          <span className="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full font-mono text-xs font-semibold">
+          <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-full font-mono text-xs font-semibold">
             {filteredERFs.length} de 72 ERFs
           </span>
         </div>
       </div>
 
       {/* Module Filters Bar & Search Input */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+      <div className="bg-[#0B101B] p-4 sm:p-5 rounded-2xl border border-slate-800 shadow-xl space-y-4">
         <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
           {/* Quick Search */}
-          <div className="relative flex-1 max-w-md">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <div className="relative flex-1 max-w-md font-mono">
+            <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Filtrar por código (ERF-05.04), título, actor o mockup..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500 focus:bg-white transition"
+              className="w-full pl-10 pr-8 py-2 text-xs bg-[#06090F] border border-slate-700/80 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:border-emerald-400 transition"
             />
             {searchQuery && (
               <button 
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
 
-          <div className="text-xs text-slate-500 flex items-center gap-1.5 self-center">
-            <Filter className="w-3.5 h-3.5 text-emerald-600" />
+          <div className="text-xs font-mono text-slate-400 flex items-center gap-1.5 self-center">
+            <Filter className="w-3.5 h-3.5 text-emerald-400" />
             <span>Filtro activo por módulo funcional</span>
           </div>
         </div>
 
         {/* Module Pill Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none font-mono">
           {MODULES.map((mod) => {
             const isSelected = selectedModule === mod.id;
             return (
               <button
                 key={mod.id}
                 onClick={() => {
-                  sound.playClick();
+                  sound.click();
                   setSelectedModule(mod.id);
                 }}
                 className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition flex items-center gap-1.5 border ${
                   isSelected
-                    ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
-                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100 hover:text-slate-900'
+                    ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40 shadow-sm'
+                    : 'bg-[#06090F] text-slate-400 border-slate-800 hover:text-slate-200'
                 }`}
               >
                 <span>{mod.name}</span>
-                <span className={`px-1.5 py-0.2 rounded-md font-mono text-[10px] ${isSelected ? 'bg-slate-800 text-emerald-400' : 'bg-slate-200/80 text-slate-600'}`}>
+                <span className={`px-1.5 py-0.2 rounded-md font-mono text-[10px] ${isSelected ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/30' : 'bg-slate-900 text-slate-500'}`}>
                   {mod.count}
                 </span>
               </button>
@@ -175,78 +182,78 @@ export default function RequirementsExplorer({ onOpenLightbox, onSelectTerm }) {
           return (
             <div
               key={erf.id}
-              className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-300 hover:shadow-md transition flex flex-col justify-between group"
+              className="bg-[#0B101B] border border-slate-800 rounded-2xl p-5 hover:border-emerald-500/50 hover:shadow-2xl hover:shadow-emerald-950/20 transition flex flex-col justify-between group"
             >
               <div>
                 {/* Card Top: ID & Badges */}
-                <div className="flex items-start justify-between gap-2 mb-3">
-                  <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200">
+                <div className="flex items-start justify-between gap-2 mb-3 font-mono">
+                  <span className="text-xs font-bold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
                     {erf.id}
                   </span>
                   <div className="flex items-center gap-1.5">
                     {erf.mockup_id && (
-                      <span className="font-mono text-[10px] font-semibold px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
                         {erf.mockup_id}
                       </span>
                     )}
-                    <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
+                    <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800">
                       {erf.prioridad || 'Alta'}
                     </span>
                   </div>
                 </div>
 
                 {/* Title */}
-                <h3 className="font-bold text-slate-900 text-base group-hover:text-emerald-700 transition leading-snug">
+                <h3 className="font-bold text-white text-base group-hover:text-emerald-300 transition leading-snug">
                   {erf.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-xs text-slate-600 mt-2 line-clamp-3 leading-relaxed">
+                <p className="text-xs text-slate-400 mt-2 line-clamp-3 leading-relaxed">
                   {erf['descripcin'] || erf.descripcion || 'Sin descripción formal'}
                 </p>
 
                 {/* Actor & Source Meta */}
-                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+                <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-500">
                   <span className="flex items-center gap-1 truncate max-w-[180px]">
-                    <User className="w-3 h-3 text-slate-400 shrink-0" />
-                    <span className="truncate">{erf['actor(es)'] || 'Usuario'}</span>
+                    <User className="w-3 h-3 text-emerald-400 shrink-0" />
+                    <span className="truncate text-slate-400">{erf['actor(es)'] || 'Usuario'}</span>
                   </span>
-                  <span className="font-mono text-[10px] text-slate-400">
+                  <span className="text-[10px] text-slate-500">
                     {erf.fuente?.split('—')[0] || 'SRS'}
                   </span>
                 </div>
               </div>
 
               {/* Card Actions */}
-              <div className="mt-5 pt-3 border-t border-slate-100 flex items-center gap-2">
+              <div className="mt-5 pt-3 border-t border-slate-800 flex items-center gap-2 font-mono">
                 <button
                   onClick={() => {
-                    sound.playClick();
+                    sound.click();
                     setActiveERF(erf);
                   }}
-                  className="flex-1 py-1.5 px-3 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-xl text-xs font-medium transition flex items-center justify-center gap-1.5 border border-slate-200"
+                  className="flex-1 py-1.5 px-3 bg-[#06090F] hover:bg-slate-900 text-slate-300 hover:text-white rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 border border-slate-800"
                 >
-                  <Eye className="w-3.5 h-3.5 text-slate-500" />
+                  <Eye className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Ficha Técnica</span>
                 </button>
 
                 <button
                   onClick={() => handleOpenFlowPlayer(erf)}
                   title="Simular Flujo Algorítmico Paso a Paso"
-                  className="py-1.5 px-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-xl text-xs font-medium transition flex items-center justify-center gap-1 border border-emerald-200 shrink-0"
+                  className="py-1.5 px-3 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1 border border-emerald-500/30 shrink-0"
                 >
-                  <Play className="w-3.5 h-3.5 text-emerald-700 fill-emerald-700" />
+                  <Play className="w-3.5 h-3.5 text-emerald-400 fill-emerald-400" />
                   <span>Flujo</span>
                 </button>
 
                 {mockupFile && (
                   <button
                     onClick={() => {
-                      sound.playClick();
-                      onOpenLightbox(`/assets/mockups/${mockupFile}`, `${erf.mockup_id}: ${erf.mockup_title || erf.title}`, `Interfaz correspondiente al requisito ${erf.id}`);
+                      sound.ping();
+                      onOpenLightbox(`assets/mockups/${mockupFile}`, `${erf.mockup_id}: ${erf.mockup_title || erf.title}`, `Interfaz correspondiente al requisito ${erf.id}`);
                     }}
                     title="Ver Mockup Vinculado"
-                    className="p-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-500 border border-slate-200 hover:text-slate-800 transition shrink-0"
+                    className="p-1.5 rounded-xl bg-[#06090F] hover:bg-slate-900 text-slate-400 border border-slate-800 hover:text-cyan-400 transition shrink-0"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
                   </button>
@@ -257,69 +264,71 @@ export default function RequirementsExplorer({ onOpenLightbox, onSelectTerm }) {
         })}
       </div>
 
-      {/* ERF Detail Modal / Drawer (Canonical 14 Fields) */}
+      {/* ERF Detail Modal (14 canonical fields) */}
       {activeERF && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn"
           onClick={() => setActiveERF(null)}
         >
           <div 
-            className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden"
+            className="bg-[#0B101B] rounded-2xl border border-slate-800 shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-scaleUp"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="p-6 border-b border-slate-100 flex items-start justify-between bg-slate-50/50">
+            <div className="p-6 border-b border-slate-800 flex items-start justify-between bg-[#06090F]">
               <div>
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-300">
+                <div className="flex items-center gap-2 mb-1.5 font-mono">
+                  <span className="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
                     {activeERF.id}
                   </span>
                   {activeERF.mockup_id && (
-                    <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">
-                      MOCKUP {activeERF.mockup_id}
+                    <span className="text-xs font-bold px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                      {activeERF.mockup_id}
                     </span>
                   )}
-                  <span className="text-xs uppercase font-semibold px-2 py-0.5 rounded bg-slate-200 text-slate-700">
+                  <span className="text-xs text-slate-500">
                     Prioridad: {activeERF.prioridad || 'Alta'}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900">{activeERF.title}</h3>
-                <p className="text-xs text-slate-500 mt-1">Fuente de Requisito: {activeERF.fuente || 'SRS Mercanex V3'}</p>
+                <h3 className="text-xl font-bold text-white">{activeERF.title}</h3>
               </div>
               <button 
-                onClick={() => setActiveERF(null)}
-                className="p-1.5 rounded-full hover:bg-slate-200 text-slate-400 hover:text-slate-600 transition"
+                onClick={() => {
+                  sound.click();
+                  setActiveERF(null);
+                }}
+                className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Modal Body: The 14 Canonical Fields */}
-            <div className="p-6 overflow-y-auto space-y-6 text-sm">
+            {/* Modal Body: 14 Canonical Fields */}
+            <div className="p-6 overflow-y-auto space-y-5 text-sm">
               {/* Description */}
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">1. Descripción del Requisito</h4>
-                <p className="text-slate-800 leading-relaxed bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-1.5">1. Descripción del Requisito</h4>
+                <p className="text-slate-300 leading-relaxed bg-[#06090F] p-3.5 rounded-xl border border-slate-800">
                   {activeERF['descripcin'] || activeERF.descripcion}
                 </p>
               </div>
 
               {/* Actors & Preconditions Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">2. Actor(es)</h4>
-                  <p className="text-slate-800 font-medium">{activeERF['actor(es)'] || 'Usuario'}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs">
+                <div className="p-3.5 bg-[#06090F] rounded-xl border border-slate-800">
+                  <h4 className="font-bold uppercase tracking-wider text-slate-400 mb-1">2. Actor(es)</h4>
+                  <p className="text-emerald-400 font-semibold">{activeERF['actor(es)'] || 'Usuario'}</p>
                 </div>
-                <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">3. Precondiciones</h4>
-                  <p className="text-slate-800">{activeERF.precondiciones || 'Ninguna previa'}</p>
+                <div className="p-3.5 bg-[#06090F] rounded-xl border border-slate-800">
+                  <h4 className="font-bold uppercase tracking-wider text-slate-400 mb-1">3. Precondiciones</h4>
+                  <p className="text-slate-300 font-sans">{activeERF.precondiciones || 'Ninguna previa'}</p>
                 </div>
               </div>
 
               {/* Inputs */}
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">4. Entradas / Parámetros</h4>
-                <p className="text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100 font-mono text-xs">
+                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-1.5">4. Entradas / Parámetros</h4>
+                <p className="text-slate-300 bg-[#06090F] p-3 rounded-xl border border-slate-800 font-mono text-xs">
                   {activeERF.entradas || 'N/A'}
                 </p>
               </div>
@@ -327,23 +336,23 @@ export default function RequirementsExplorer({ onOpenLightbox, onSelectTerm }) {
               {/* Main Flow (Step-by-Step) */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">5. Flujo Principal Algorítmico</h4>
+                  <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">5. Flujo Principal Algorítmico</h4>
                   <button
                     onClick={() => {
                       const target = activeERF;
                       setActiveERF(null);
                       handleOpenFlowPlayer(target);
                     }}
-                    className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-1"
+                    className="text-xs font-mono font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition"
                   >
-                    <Play className="w-3 h-3 fill-emerald-600" />
+                    <Play className="w-3 h-3 fill-emerald-400" />
                     <span>Reproducir en Simulador</span>
                   </button>
                 </div>
-                <div className="space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div className="space-y-2 bg-[#06090F] p-4 rounded-xl border border-slate-800">
                   {parseFlowSteps(activeERF['flujo principal']).map(s => (
-                    <div key={s.stepNum} className="flex items-start gap-3 text-xs leading-relaxed text-slate-800">
-                      <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 font-mono font-bold flex items-center justify-center shrink-0 text-[10px]">
+                    <div key={s.stepNum} className="flex items-start gap-3 text-xs leading-relaxed text-slate-300">
+                      <span className="w-5 h-5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-mono font-bold flex items-center justify-center shrink-0 text-[10px]">
                         {s.stepNum}
                       </span>
                       <span>{s.text}</span>
@@ -354,53 +363,54 @@ export default function RequirementsExplorer({ onOpenLightbox, onSelectTerm }) {
 
               {/* Business Rules & Exceptions */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 bg-emerald-50/60 rounded-xl border border-emerald-100">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-1.5 flex items-center gap-1">
+                <div className="p-4 bg-emerald-500/10 rounded-xl border border-emerald-500/25">
+                  <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 mb-1.5 flex items-center gap-1">
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     <span>6. Reglas de Negocio</span>
                   </h4>
-                  <p className="text-xs text-emerald-950 leading-relaxed">{activeERF.reglas || 'Conforme a especificación base.'}</p>
+                  <p className="text-xs text-emerald-200/90 leading-relaxed">{activeERF.reglas || 'Conforme a especificación base.'}</p>
                 </div>
 
-                <div className="p-4 bg-amber-50/60 rounded-xl border border-amber-100">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-amber-800 mb-1.5 flex items-center gap-1">
+                <div className="p-4 bg-amber-500/10 rounded-xl border border-amber-500/25">
+                  <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-amber-400 mb-1.5 flex items-center gap-1">
                     <AlertTriangle className="w-3.5 h-3.5" />
                     <span>7. Excepciones & Fallos</span>
                   </h4>
-                  <p className="text-xs text-amber-950 leading-relaxed">{activeERF.excepciones || 'Reintento o validación de campos.'}</p>
+                  <p className="text-xs text-amber-200/90 leading-relaxed">{activeERF.excepciones || 'Reintento o validación de campos.'}</p>
                 </div>
               </div>
 
               {/* Postconditions & Acceptance Criteria */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">8. Postcondiciones</h4>
-                  <p className="text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                  <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-1.5">8. Postcondiciones</h4>
+                  <p className="text-xs text-slate-300 bg-[#06090F] p-3 rounded-xl border border-slate-800">
                     {activeERF.postcondiciones || 'Estado de la base de datos actualizado.'}
                   </p>
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">9. Criterios de Aceptación</h4>
-                  <p className="text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                  <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-1.5">9. Criterios de Aceptación</h4>
+                  <p className="text-xs text-slate-300 bg-[#06090F] p-3 rounded-xl border border-slate-800">
                     {activeERF['criterios de aceptacin'] || activeERF.criterios_aceptacion || 'Verificación en ambiente de QA.'}
                   </p>
                 </div>
               </div>
 
               {/* Dependencies & Linked Artifacts */}
-              <div className="p-4 bg-slate-100/60 rounded-xl border border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
+              <div className="p-4 bg-[#06090F] rounded-xl border border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
                 <div>
                   <span className="text-slate-500">Dependencias Técnicas: </span>
-                  <span className="font-semibold text-slate-800">{activeERF.dependencias || 'Ninguna'}</span>
+                  <span className="font-semibold text-white">{activeERF.dependencias || 'Ninguna'}</span>
                 </div>
                 {activeERF.mockup_id && (
                   <button
                     onClick={() => {
                       const file = `${activeERF.mockup_id}.png`;
                       setActiveERF(null);
-                      onOpenLightbox(`/assets/mockups/${file}`, `Mockup ${activeERF.mockup_id}`, `Pantalla vinculada a ${activeERF.id}`);
+                      sound.ping();
+                      onOpenLightbox(`assets/mockups/${file}`, `Mockup ${activeERF.mockup_id}`, `Pantalla vinculada a ${activeERF.id}`);
                     }}
-                    className="px-3 py-1.5 bg-white text-indigo-700 font-semibold rounded-lg border border-indigo-200 hover:bg-indigo-50 transition flex items-center gap-1.5 shadow-sm"
+                    className="px-3 py-1.5 bg-cyan-500/10 text-cyan-400 font-semibold rounded-lg border border-cyan-500/30 hover:bg-cyan-500/20 transition flex items-center gap-1.5 shadow-sm"
                   >
                     <span>Abrir Mockup {activeERF.mockup_id} en HD</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -410,10 +420,13 @@ export default function RequirementsExplorer({ onOpenLightbox, onSelectTerm }) {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 border-t border-slate-100 bg-slate-50/50 flex justify-end">
+            <div className="p-4 border-t border-slate-800 bg-[#06090F] flex justify-end font-mono">
               <button
-                onClick={() => setActiveERF(null)}
-                className="px-5 py-2 bg-slate-900 text-white rounded-xl text-xs font-semibold hover:bg-slate-800 transition"
+                onClick={() => {
+                  sound.click();
+                  setActiveERF(null);
+                }}
+                className="px-5 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl text-xs font-bold transition"
               >
                 Cerrar Ficha
               </button>
@@ -425,30 +438,30 @@ export default function RequirementsExplorer({ onOpenLightbox, onSelectTerm }) {
       {/* ERF Flow Player Simulator (State Machine Swimlanes) */}
       {flowSimulator.isOpen && flowSimulator.erf && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-md animate-fadeIn"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn"
           onClick={() => setFlowSimulator(prev => ({ ...prev, isOpen: false }))}
         >
           <div 
-            className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-4xl w-full flex flex-col overflow-hidden"
+            className="bg-[#0B101B] rounded-2xl border border-slate-800 shadow-2xl max-w-4xl w-full flex flex-col overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Simulator Header */}
-            <div className="p-6 border-b border-slate-100 flex items-start justify-between bg-slate-900 text-white">
+            <div className="p-6 border-b border-slate-800 flex items-start justify-between bg-[#06090F] text-white">
               <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                <div className="flex items-center gap-2 mb-1 font-mono">
+                  <span className="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                     SIMULADOR DE FLUJO PASO A PASO
                   </span>
-                  <span className="font-mono text-xs text-slate-400">{flowSimulator.erf.id}</span>
+                  <span className="text-xs text-slate-400">{flowSimulator.erf.id}</span>
                 </div>
                 <h3 className="text-xl font-bold">{flowSimulator.erf.title}</h3>
-                <p className="text-xs text-slate-400 mt-1">
-                  Carriles de Actores: {flowSimulator.erf['actor(es)'] || 'Usuario'} ➔ Aplicación Mercanex ➔ Pasarela ePayco ➔ PostgreSQL 16
+                <p className="text-xs text-slate-400 mt-1 font-mono">
+                  Carriles de Actores: {flowSimulator.erf['actor(es)'] || 'Usuario'} ➔ Mercanex App ➔ ePayco Split ➔ PostgreSQL 16
                 </p>
               </div>
               <button 
                 onClick={() => setFlowSimulator(prev => ({ ...prev, isOpen: false }))}
-                className="p-1.5 rounded-full hover:bg-slate-800 text-slate-400 hover:text-white transition"
+                className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -464,13 +477,13 @@ export default function RequirementsExplorer({ onOpenLightbox, onSelectTerm }) {
                 <div className="p-6 space-y-6">
                   {/* Progress Bar */}
                   <div>
-                    <div className="flex justify-between text-xs text-slate-500 font-mono mb-2">
+                    <div className="flex justify-between text-xs text-slate-400 font-mono mb-2">
                       <span>Paso {flowSimulator.currentStep + 1} de {steps.length}</span>
-                      <span>{Math.round(progressPct)}% Completado</span>
+                      <span className="text-emerald-400 font-bold">{Math.round(progressPct)}% Completado</span>
                     </div>
-                    <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-2 w-full bg-[#06090F] rounded-full overflow-hidden border border-slate-800">
                       <div 
-                        className="h-full bg-emerald-500 transition-all duration-300 rounded-full"
+                        className="h-full bg-emerald-400 transition-all duration-300 rounded-full shadow-[0_0_8px_rgba(0,245,155,0.7)]"
                         style={{ width: `${progressPct}%` }}
                       />
                     </div>
@@ -478,51 +491,51 @@ export default function RequirementsExplorer({ onOpenLightbox, onSelectTerm }) {
 
                   {/* Actor Swimlanes Display */}
                   <div className="grid grid-cols-4 gap-2 text-center text-xs font-mono">
-                    <div className={`p-3 rounded-xl border transition ${flowSimulator.currentStep % 4 === 0 ? 'bg-emerald-50 border-emerald-300 text-emerald-800 font-bold shadow-sm' : 'bg-slate-50 border-slate-100 text-slate-500'}`}>
-                      <User className="w-4 h-4 mx-auto mb-1 opacity-70" />
+                    <div className={`p-3 rounded-xl border transition ${flowSimulator.currentStep % 4 === 0 ? 'bg-emerald-500/15 border-emerald-400 text-emerald-400 font-bold shadow-sm' : 'bg-[#06090F] border-slate-800 text-slate-500'}`}>
+                      <User className="w-4 h-4 mx-auto mb-1 opacity-80" />
                       <span>{flowSimulator.erf['actor(es)']?.split('.')[0] || 'Actor'}</span>
                     </div>
-                    <div className={`p-3 rounded-xl border transition ${flowSimulator.currentStep % 4 === 1 ? 'bg-emerald-50 border-emerald-300 text-emerald-800 font-bold shadow-sm' : 'bg-slate-50 border-slate-100 text-slate-500'}`}>
-                      <Layers className="w-4 h-4 mx-auto mb-1 opacity-70" />
+                    <div className={`p-3 rounded-xl border transition ${flowSimulator.currentStep % 4 === 1 ? 'bg-emerald-500/15 border-emerald-400 text-emerald-400 font-bold shadow-sm' : 'bg-[#06090F] border-slate-800 text-slate-500'}`}>
+                      <Layers className="w-4 h-4 mx-auto mb-1 opacity-80" />
                       <span>Mercanex App</span>
                     </div>
-                    <div className={`p-3 rounded-xl border transition ${flowSimulator.currentStep % 4 === 2 ? 'bg-emerald-50 border-emerald-300 text-emerald-800 font-bold shadow-sm' : 'bg-slate-50 border-slate-100 text-slate-500'}`}>
-                      <Sparkles className="w-4 h-4 mx-auto mb-1 opacity-70" />
+                    <div className={`p-3 rounded-xl border transition ${flowSimulator.currentStep % 4 === 2 ? 'bg-emerald-500/15 border-emerald-400 text-emerald-400 font-bold shadow-sm' : 'bg-[#06090F] border-slate-800 text-slate-500'}`}>
+                      <Sparkles className="w-4 h-4 mx-auto mb-1 opacity-80" />
                       <span>ePayco Split</span>
                     </div>
-                    <div className={`p-3 rounded-xl border transition ${flowSimulator.currentStep % 4 === 3 ? 'bg-emerald-50 border-emerald-300 text-emerald-800 font-bold shadow-sm' : 'bg-slate-50 border-slate-100 text-slate-500'}`}>
-                      <Database className="w-4 h-4 mx-auto mb-1 opacity-70" />
+                    <div className={`p-3 rounded-xl border transition ${flowSimulator.currentStep % 4 === 3 ? 'bg-emerald-500/15 border-emerald-400 text-emerald-400 font-bold shadow-sm' : 'bg-[#06090F] border-slate-800 text-slate-500'}`}>
+                      <Database className="w-4 h-4 mx-auto mb-1 opacity-80" />
                       <span>PostgreSQL 16</span>
                     </div>
                   </div>
 
                   {/* Step Description Card */}
-                  <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-2xl bg-emerald-600 text-white font-mono font-bold flex items-center justify-center shrink-0 shadow-md">
+                  <div className="p-6 bg-[#06090F] rounded-2xl border border-slate-800 flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-mono font-bold flex items-center justify-center shrink-0 shadow-md">
                       {current.stepNum}
                     </div>
                     <div>
-                      <h4 className="text-xs uppercase font-mono font-bold text-emerald-700 tracking-wider mb-1">
+                      <h4 className="text-xs uppercase font-mono font-bold text-emerald-400 tracking-wider mb-1">
                         Acción Ejecutada en el Sistema
                       </h4>
-                      <p className="text-base text-slate-800 font-medium leading-relaxed">
+                      <p className="text-base text-slate-200 font-medium leading-relaxed font-sans">
                         {current.text}
                       </p>
                     </div>
                   </div>
 
                   {/* Simulated Terminal Log */}
-                  <div className="bg-slate-900 text-slate-300 p-4 rounded-xl font-mono text-xs space-y-1 overflow-x-auto shadow-inner">
+                  <div className="bg-[#06090F] text-slate-300 p-4 rounded-xl font-mono text-xs space-y-1 overflow-x-auto border border-slate-800/80 shadow-inner">
                     <div className="text-emerald-400">$ [MERCANEX_KERNEL_DISPATCH] Sequence trigger: {flowSimulator.erf.id}</div>
-                    <div className="text-slate-400">» Timestamp: {new Date().toISOString()} • Step #{current.stepNum}</div>
-                    <div className="text-blue-300">» Payload: {JSON.stringify({ step: current.stepNum, actor: flowSimulator.erf['actor(es)'] || 'User', status: 'OK' })}</div>
+                    <div className="text-slate-500">» Timestamp: {new Date().toISOString()} • Step #{current.stepNum}</div>
+                    <div className="text-cyan-400">» Payload: {JSON.stringify({ step: current.stepNum, actor: flowSimulator.erf['actor(es)'] || 'User', status: 'OK' })}</div>
                   </div>
 
                   {/* Simulator Controls */}
-                  <div className="flex items-center justify-between pt-2">
+                  <div className="flex items-center justify-between pt-2 font-mono">
                     <button
                       onClick={handleResetFlow}
-                      className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition flex items-center gap-1.5"
+                      className="px-4 py-2 bg-[#06090F] hover:bg-slate-900 border border-slate-800 text-slate-300 rounded-xl text-xs font-semibold transition flex items-center gap-1.5"
                     >
                       <RotateCcw className="w-3.5 h-3.5" />
                       <span>Reiniciar</span>
@@ -532,14 +545,14 @@ export default function RequirementsExplorer({ onOpenLightbox, onSelectTerm }) {
                       <button
                         onClick={handleStepPrev}
                         disabled={flowSimulator.currentStep === 0}
-                        className="px-4 py-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed text-slate-700 rounded-xl text-xs font-semibold transition"
+                        className="px-4 py-2 bg-[#06090F] hover:bg-slate-900 border border-slate-800 disabled:opacity-30 disabled:cursor-not-allowed text-slate-300 rounded-xl text-xs font-semibold transition"
                       >
                         Anterior
                       </button>
 
                       <button
                         onClick={handleStepNext}
-                        className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-sm"
+                        className="px-5 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
                       >
                         <span>{flowSimulator.currentStep === steps.length - 1 ? 'Finalizar' : 'Siguiente Paso'}</span>
                         <ChevronRight className="w-3.5 h-3.5" />

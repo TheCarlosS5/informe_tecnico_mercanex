@@ -1,11 +1,12 @@
 import React from 'react';
 import { ArrowUp, Award, ShieldCheck, Heart, Terminal } from 'lucide-react';
 import { sound } from '../lib/soundSynthesizer';
+import { scrollToAnchor } from '../lib/smoothScroll';
 
 export default function FooterSection() {
   const scrollToTop = () => {
     sound.click();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToAnchor('#root');
   };
 
   return (

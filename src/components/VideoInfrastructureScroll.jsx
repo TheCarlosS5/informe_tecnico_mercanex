@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import TechTerm from './TechTerm';
 import { sound } from '../lib/soundSynthesizer';
+import { scrollToAnchor } from '../lib/smoothScroll';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -201,7 +202,7 @@ export default function VideoInfrastructureScroll({ onSelectTerm }) {
           playsInline
           className="w-full h-full object-cover opacity-25 filter contrast-125 brightness-75"
         >
-          <source src="/assets/videos/cyber_server_scroll.mp4" type="video/mp4" />
+          <source src="assets/videos/cyber_server_scroll.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-[#06090F]/80 backdrop-blur-[2px]" />
         <div className="absolute inset-0 bg-grid-cyber opacity-30" />
@@ -282,8 +283,7 @@ export default function VideoInfrastructureScroll({ onSelectTerm }) {
                     onClick={() => {
                       sound.click();
                       setActiveLayerIndex(i);
-                      const el = document.getElementById(`trigger-${l.id}`);
-                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      scrollToAnchor(`#trigger-${l.id}`);
                     }}
                     className={`px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition ${
                       i === activeLayerIndex 

@@ -137,6 +137,27 @@ class SoundSynthesizer {
       // Ignore
     }
   }
+
+  // Aliases for developer convenience
+  click() {
+    this.playClick();
+  }
+
+  ping() {
+    this.playChime(660, 0.12);
+  }
+
+  focus() {
+    this.playTone(480, 'sine', 0.05, 0.02);
+  }
+
+  reveal() {
+    this.playReveal();
+  }
+
+  success() {
+    this.playSuccess();
+  }
 }
 
 export const sound = new SoundSynthesizer();

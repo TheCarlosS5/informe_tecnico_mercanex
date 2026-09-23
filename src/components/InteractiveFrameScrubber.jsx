@@ -96,7 +96,7 @@ export default function InteractiveFrameScrubber() {
   };
 
   return (
-    <div className="bg-[#0B101B] border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-5" id="interactive-motion">
+    <div className="bg-[#0B101B] border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-5" id="frame-scrubber">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
         <div>
