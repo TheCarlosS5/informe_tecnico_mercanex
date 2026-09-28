@@ -9,7 +9,9 @@
 
 > Aplicación web interactiva de ingeniería de software para la sustentación y auditoría del proyecto formativo **MERCANEX — Marketplace de Bienes y Licencias Digitales** (SENA Regional Huila • Centro de la Industria, la Empresa y los Servicios CIES • Ficha ADSO 3407799).
 
-Diseñada bajo el estándar estético **Impeccable Dark Cyber** (`#06090F` ónix profundo, `#0B101B` pizarra técnica, `#00F59B` verde esmeralda y `#38BDF8` cian de telemetría), combinando tipografías de ingeniería (*Plus Jakarta Sans* y *JetBrains Mono*) con animaciones sincronizadas al scroll mediante **GSAP + ScrollTrigger** y **Lenis**.
+Presentación clara con fondo blanco, superficies suaves y acentos verdes. Conserva las interacciones de **GSAP + ScrollTrigger** y **Lenis**.
+
+Las evidencias vigentes se toman de la [carpeta E5 de Google Drive](https://drive.google.com/drive/folders/1r_8w99sg2UWE0Zu8jeC2iwInff6m5xoo). `src/data/driveManifest.json` conserva los nombres, la jerarquía y los enlaces individuales; `EquipoAnterior` está excluida. Las imágenes de 72 mockups y 16 diagramas del informe técnico se cargan desde Drive. La interfaz requiere que esos archivos conserven el permiso «Cualquiera con el enlace → Lector».
 
 ---
 
@@ -21,13 +23,13 @@ Este repositorio está optimizado para despliegue sin configuración adicional e
 1. Ve a tu panel en [vercel.com](https://vercel.com) e inicia sesión con tu cuenta de GitHub.
 2. Pulsa el botón **"Add New..."** y selecciona **"Project"**.
 3. En la lista de repositorios, localiza y haz clic en **Import** junto a `TheCarlosS5/informe_tecnico_mercanex`.
-4. Vercel detectará automáticamente la configuración definida en `vercel.json`:
+4. Configura el proyecto como Vite:
    - **Framework Preset:** `Vite`
    - **Build Command:** `npm run build`
    - **Output Directory:** `dist`
    - **Install Command:** `npm install`
 5. Haz clic en el botón azul **"Deploy"**.
-6. En menos de 60 segundos tu informe interactivo estará publicado con HTTPS y dominio gratuito `*.vercel.app`.
+6. Revisa el resultado de la compilación y la URL de Vercel.
 
 ### Opción 2: Despliegue Directo con Vercel CLI
 ```bash
@@ -56,7 +58,7 @@ npm install
 # 3. Levantar servidor local Vite con HMR
 npm run dev
 ```
-Abre en tu navegador: [http://localhost:3000](http://localhost:3000)
+Abre la URL local que indique Vite (por defecto `http://localhost:5173`).
 
 ```bash
 # Compilar build optimizado de producción
@@ -70,7 +72,7 @@ npm run preview
 
 ## 🏛️ Arquitectura del Informe y Módulos Interactivos
 
-El aplicativo representa con rigor técnico y causal el 100% de la documentación técnica y de modelado SRS de Mercanex:
+El aplicativo presenta los módulos del informe y enlaza las evidencias originales en Drive:
 
 | Capítulo | Componente | Descripción e Interactividad |
 | :--- | :--- | :--- |
@@ -90,6 +92,7 @@ El aplicativo representa con rigor técnico y causal el 100% de la documentació
 | **Cap. 11** | `LegalMatrixSection.jsx` | Gobernanza jurídica colombiana: Ley 1581 (Habeas Data), Ley 527 (Comercio Electrónico), Ley 1480 (Consumidor) y Ley 603 (Antipiratería). |
 | **Cap. 12** | `QualitySecuritySection.jsx` | Ciberseguridad (Argon2id, 2FA TOTP, HMAC, Idempotencia), SLAs de rendimiento Apache JMeter y **Plan Oficial de 20 Casos de Prueba (CP-01 a CP-20)**. |
 | **Glosario & Paleta** | `DictionaryDrawer.jsx` & `CommandPalette.jsx` | Glosario de 31 conceptos clave con síntesis de voz nativa y paleta de comandos global tipo Spotlight (`Ctrl + K`). |
+| **Evidencias / Documentación** | `EvidenceExplorer.jsx` | Árbol navegable y buscable de carpetas y archivos, con tipo y enlace individual de Drive. |
 
 ---
 
