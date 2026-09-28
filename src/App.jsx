@@ -21,6 +21,7 @@ import TermModal from './components/TermModal';
 import DictionaryDrawer from './components/DictionaryDrawer';
 import LightboxModal from './components/LightboxModal';
 import CommandPalette from './components/CommandPalette';
+import EvidenceExplorer from './components/EvidenceExplorer';
 import { initSmoothScroll, scrollToAnchor } from './lib/smoothScroll';
 
 export default function App() {
@@ -124,6 +125,8 @@ export default function App() {
 
         {/* CAPÍTULO 12: Aseguramiento de Calidad (QA), SLAs y Ciberseguridad */}
         <QualitySecuritySection onSelectTerm={setSelectedTerm} />
+
+        <EvidenceExplorer />
 
       </main>
 

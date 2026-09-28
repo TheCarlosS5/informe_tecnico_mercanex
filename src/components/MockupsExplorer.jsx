@@ -1,3 +1,4 @@
+import { driveImage } from '../data/driveAssets';
 import React, { useState, useRef, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Search, LayoutGrid, Eye } from 'lucide-react';
 import { MOCKUPS_DATA } from '../data/mockupsData';
@@ -11,13 +12,13 @@ export default function MockupsExplorer({ onOpenLightbox }) {
   const categories = [
     { id: 'all', label: 'Todos (72)' },
     { id: 'auth', label: 'Autenticación (M01-M08)' },
-    { id: 'tiendas', label: 'Tiendas & Vendedores (M09-M18)' },
-    { id: 'productos', label: 'Productos & Claves (M19-M28)' },
-    { id: 'catalogo', label: 'Catálogo & Búsqueda (M29-M36)' },
-    { id: 'carrito', label: 'Carrito & Checkout (M37-M46)' },
-    { id: 'chat', label: 'Entrega & Chat (M47-M56)' },
-    { id: 'reclamos', label: 'Garantías & Reclamos (M57-M64)' },
-    { id: 'admin', label: 'Backoffice & Auditoría (M65-M72)' },
+    { id: 'tiendas', label: 'Usuarios y vendedores (M09-M16)' },
+    { id: 'productos', label: 'Publicaciones e inventario (M17-M25)' },
+    { id: 'catalogo', label: 'Catálogo (M26-M32)' },
+    { id: 'carrito', label: 'Compra y pago (M33-M43)' },
+    { id: 'chat', label: 'Comunicación (M44-M52)' },
+    { id: 'reclamos', label: 'Valoraciones y reclamos (M53-M62)' },
+    { id: 'admin', label: 'Administración (M63-M72)' },
   ];
 
   const filteredMockups = useMemo(() => {
@@ -131,7 +132,7 @@ export default function MockupsExplorer({ onOpenLightbox }) {
               {/* Thumbnail */}
               <div className="w-full h-44 bg-black overflow-hidden relative">
                 <img
-                  src={`assets/mockups/${mockup.file}`}
+                  src={driveImage('mockups', mockup.file, 800)}
                   alt={mockup.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100"
                   loading="lazy"

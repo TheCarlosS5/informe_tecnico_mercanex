@@ -5,6 +5,7 @@ import semanticData from '../data/mercanex_semantic_inventory.json';
 import { MOCKUPS_DATA } from '../data/mockupsData';
 import { DIAGRAMS_DATA } from '../data/diagramsData';
 import { TECH_DICTIONARY } from '../data/dictionaryData';
+import { driveItems } from '../data/driveAssets';
 
 export default function CommandPalette({
   isOpen,
@@ -111,6 +112,19 @@ export default function CommandPalette({
       });
     });
 
+    driveItems.forEach(item => {
+      items.push({
+        id: item.id,
+        type: 'evidence',
+        typeLabel: item.type === 'folder' ? 'Carpeta Drive' : 'Archivo Drive',
+        icon: item.type === 'folder' ? Layers : BookOpen,
+        badgeColor: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30',
+        title: item.name,
+        subtitle: item.path,
+        raw: item,
+      });
+    });
+
     return items;
   }, []);
 
@@ -170,6 +184,8 @@ export default function CommandPalette({
       if (onOpenLightbox) {
         onOpenLightbox(`assets/diagrams/${item.file}`, item.title, item.subtitle);
       }
+    } else if (item.type === 'evidence') {
+      window.open(item.raw.url, '_blank', 'noopener,noreferrer');
     } else if (item.type === 'term') {
       if (onSelectTerm) onSelectTerm(item.raw);
     } else if (item.targetSection) {

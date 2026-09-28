@@ -1,3 +1,4 @@
+import { driveImage } from '../data/driveAssets';
 import React, { useState } from 'react';
 import TechTerm from './TechTerm';
 import { Database, Key, Shield, Layers, Eye } from 'lucide-react';
@@ -108,7 +109,7 @@ export default function DatabaseDERSection({ onSelectTerm, onOpenLightbox }) {
           className="w-full h-80 bg-black border border-slate-800 rounded-xl p-3 flex items-center justify-center cursor-pointer group relative overflow-hidden"
         >
           <img
-            src="assets/diagrams/D13_DER_Modelo_Entidad_Relacion_PostgreSQL16.png"
+            src={driveImage('diagrams', 'D13_DER_Modelo_Entidad_Relacion_PostgreSQL16.png', 1600)}
             alt="DER PostgreSQL 16 Mercanex"
             className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
           />

@@ -1,9 +1,10 @@
+import { driveAsset, driveImage } from './driveAssets';
 /**
  * CATÁLOGO DE DIAGRAMAS OFICIALES DE INGENIERÍA (16 ARTEFACTOS UML Y DER)
  * Resolución nativa 300 DPI para sustentación SENA ADSO
  */
 
-export const DIAGRAMS_DATA = [
+const diagrams = [
   {
     id: "D01",
     file: "D01_Registro_y_Verificacion.png",
@@ -117,3 +118,5 @@ export const DIAGRAMS_DATA = [
     desc: "Capas de supervisión del marketplace y trazabilidad inmutable de operaciones sensibles para cumplimiento normativo."
   }
 ];
+
+export const DIAGRAMS_DATA = diagrams.map(item => ({ ...item, driveUrl: driveAsset('diagrams', item.file)?.url, imageUrl: driveImage('diagrams', item.file, 1000) }));

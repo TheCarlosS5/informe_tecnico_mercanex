@@ -1,3 +1,4 @@
+import { resolveDriveImage } from '../data/driveAssets';
 import React, { useState, useEffect } from 'react';
 import { X, ZoomIn, ZoomOut, ExternalLink, Download } from 'lucide-react';
 import { sound } from '../lib/soundSynthesizer';
@@ -18,6 +19,7 @@ export default function LightboxModal({ isOpen, src, title, desc, onClose }) {
   }, [onClose]);
 
   if (!isOpen || !src) return null;
+  const asset = resolveDriveImage(src);
 
   const handleClose = () => {
     sound.click();
@@ -51,14 +53,14 @@ export default function LightboxModal({ isOpen, src, title, desc, onClose }) {
         </button>
 
         <a
-          href={src}
+          href={asset.url}
           target="_blank"
           rel="noopener noreferrer"
           className="p-2.5 text-slate-300 hover:text-emerald-400 bg-[#0B101B] border border-slate-700/80 rounded-xl transition shadow-lg flex items-center gap-1.5"
           title="Abrir imagen original en nueva pestaña"
         >
           <ExternalLink className="w-4 h-4" />
-          <span className="hidden sm:inline">Original HD</span>
+          <span className="hidden sm:inline">Abrir en Drive</span>
         </a>
 
         <button
@@ -81,7 +83,7 @@ export default function LightboxModal({ isOpen, src, title, desc, onClose }) {
           className={`relative overflow-hidden rounded-2xl shadow-2xl bg-[#06090F] border border-slate-800 cursor-${isZoomed ? 'zoom-out' : 'zoom-in'}`}
         >
           <img
-            src={src}
+            src={asset.image}
             alt={title || "Vista previa 300 DPI"}
             className={`transition-all duration-200 ${
               isZoomed 

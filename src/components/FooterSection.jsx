@@ -30,6 +30,7 @@ export default function FooterSection() {
         </div>
 
         <div className="flex items-center gap-3">
+          <a href="#evidencias" onClick={(event) => { event.preventDefault(); scrollToAnchor('#evidencias'); }} className="flex items-center gap-1.5 px-3 py-2 bg-[#0B101B] border border-slate-800 hover:border-emerald-500/50 text-emerald-400 rounded-xl shadow-lg transition font-mono font-bold text-xs">Evidencias / Documentación</a>
           <button
             onClick={scrollToTop}
             className="flex items-center gap-1.5 px-3 py-2 bg-[#0B101B] border border-slate-800 hover:border-emerald-500/50 text-slate-300 hover:text-emerald-400 rounded-xl shadow-lg transition font-mono font-bold text-xs"

@@ -1,3 +1,4 @@
+import { driveImage } from '../data/driveAssets';
 import React, { useRef } from 'react';
 import { ChevronLeft, ChevronRight, GitBranch, Eye } from 'lucide-react';
 import { DIAGRAMS_DATA } from '../data/diagramsData';
@@ -64,7 +65,7 @@ export default function DiagramsExplorer({ onOpenLightbox }) {
           >
             <div className="w-full h-56 bg-black p-3 flex items-center justify-center relative overflow-hidden">
               <img
-                src={`assets/diagrams/${diag.file}`}
+                src={driveImage('diagrams', diag.file, 1000)}
                 alt={diag.title}
                 className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
