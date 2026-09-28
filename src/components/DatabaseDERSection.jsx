@@ -70,23 +70,23 @@ export default function DatabaseDERSection({ onSelectTerm, onOpenLightbox }) {
 
   return (
     <section className="space-y-6" id="cap6-der">
-      <div className="border-b border-slate-800 pb-4">
-        <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 block mb-0.5">
+      <div className="border-b border-slate-200 pb-4">
+        <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-700 block mb-0.5">
           Capítulo 08 • Persistencia de Datos
         </span>
-        <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2">
-          <Database className="w-6 h-6 text-emerald-400" />
+        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+          <Database className="w-6 h-6 text-emerald-700" />
           <span>Modelo de Base de Datos Relacional (PostgreSQL 16)</span>
         </h2>
-        <p className="text-sm text-slate-400 mt-1">
+        <p className="text-sm text-slate-600 mt-1">
           Arquitectura relacional de 15 entidades en Tercera Forma Normal (3FN), con claves primarias <TechTerm id="uuid-v4" onSelectTerm={onSelectTerm}>UUID v4</TechTerm>, soporte transaccional <TechTerm id="postgresql-acid" onSelectTerm={onSelectTerm}>ACID</TechTerm> y control de concurrencia mediante <TechTerm id="select-for-update" onSelectTerm={onSelectTerm}>SELECT FOR UPDATE</TechTerm>.
         </p>
       </div>
 
       {/* Visor del Diagrama DER Maestro */}
-      <div className="bg-[#0B101B] border border-slate-800 rounded-2xl p-5 shadow-2xl space-y-3">
+      <div className="bg-[#F8FAFC] border border-slate-200 rounded-lg p-5 shadow-sm space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">
+          <span className="text-xs font-mono font-bold text-slate-700 uppercase tracking-wider">
             D13: Diagrama Entidad-Relación PostgreSQL 16 (Resolución 300 DPI)
           </span>
           <button
@@ -94,19 +94,19 @@ export default function DatabaseDERSection({ onSelectTerm, onOpenLightbox }) {
               sound.ping();
               onOpenLightbox('assets/diagrams/D13_DER_Modelo_Entidad_Relacion_PostgreSQL16.png', 'D13: Modelo Entidad-Relación PostgreSQL 16 (DER)', 'Esquema relacional maestro de 15 tablas en 3FN con UUID v4, campos cifrados AES-256 e integridad referencial estricta.');
             }}
-            className="text-xs font-mono font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition"
+            className="text-xs font-mono font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 transition"
           >
             <Eye className="w-4 h-4" />
             <span>Ampliar Diagrama Completo</span>
           </button>
         </div>
 
-        <div 
+        <div
           onClick={() => {
             sound.ping();
             onOpenLightbox('assets/diagrams/D13_DER_Modelo_Entidad_Relacion_PostgreSQL16.png', 'D13: Modelo Entidad-Relación PostgreSQL 16 (DER)', 'Esquema relacional maestro de 15 tablas en 3FN con UUID v4, campos cifrados AES-256 e integridad referencial estricta.');
           }}
-          className="w-full h-80 bg-black border border-slate-800 rounded-xl p-3 flex items-center justify-center cursor-pointer group relative overflow-hidden"
+          className="w-full h-80 bg-black border border-slate-200 rounded-md p-3 flex items-center justify-center cursor-pointer group relative overflow-hidden"
         >
           <img
             src={driveImage('diagrams', 'D13_DER_Modelo_Entidad_Relacion_PostgreSQL16.png', 1600)}
@@ -118,10 +118,10 @@ export default function DatabaseDERSection({ onSelectTerm, onOpenLightbox }) {
       </div>
 
       {/* Inspector Interactivo de Tablas */}
-      <div className="bg-[#0B101B] border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-          <h3 className="text-sm font-bold font-mono text-white uppercase tracking-wider flex items-center gap-2">
-            <Layers className="w-4 h-4 text-emerald-400" />
+      <div className="bg-[#F8FAFC] border border-slate-200 rounded-lg p-6 shadow-sm space-y-4">
+        <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+          <h3 className="text-sm font-bold font-mono text-slate-900 uppercase tracking-wider flex items-center gap-2">
+            <Layers className="w-4 h-4 text-emerald-700" />
             <span>Explorador Interactivo de Entidades Transaccionales</span>
           </h3>
           <span className="text-xs font-mono text-slate-500">Selecciona una tabla para ver atributos</span>
@@ -136,10 +136,10 @@ export default function DatabaseDERSection({ onSelectTerm, onOpenLightbox }) {
                 sound.click();
                 setSelectedTable(t.name);
               }}
-              className={`px-3 py-1.5 text-xs font-bold rounded-xl whitespace-nowrap transition ${
+              className={`px-3 py-1.5 text-xs font-bold rounded-md whitespace-nowrap transition ${
                 selectedTable === t.name
-                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-sm'
-                  : 'bg-[#06090F] border border-slate-800 text-slate-400 hover:text-slate-200'
+                  ? 'bg-emerald-500/20 text-emerald-700 border border-emerald-500/40 shadow-sm'
+                  : 'bg-white border border-slate-200 text-slate-600 hover:text-slate-800'
               }`}
             >
               {t.name}
@@ -148,36 +148,36 @@ export default function DatabaseDERSection({ onSelectTerm, onOpenLightbox }) {
         </div>
 
         {/* Ficha de la Tabla Seleccionada */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-[#06090F] border border-slate-800/80 rounded-xl p-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white border border-slate-200/80 rounded-md p-5">
           <div className="space-y-3 font-mono">
             <div className="flex items-center gap-2">
-              <span className="text-base font-bold text-white">
+              <span className="text-base font-bold text-slate-900">
                 {activeTableData.label}
               </span>
             </div>
-            <p className="text-xs text-slate-300 leading-relaxed font-sans">
+            <p className="text-xs text-slate-700 leading-relaxed font-sans">
               {activeTableData.desc}
             </p>
 
             <div className="space-y-1.5 text-xs pt-2">
               <div>
                 <span className="text-slate-500 font-bold block text-[10px] uppercase">Clave Primaria (PK):</span>
-                <span className="font-semibold text-emerald-400">{activeTableData.pk}</span>
+                <span className="font-semibold text-emerald-700">{activeTableData.pk}</span>
               </div>
               <div>
                 <span className="text-slate-500 font-bold block text-[10px] uppercase">Claves Foráneas (FK):</span>
-                <span className="font-semibold text-cyan-400">{activeTableData.fk}</span>
+                <span className="font-semibold text-cyan-700">{activeTableData.fk}</span>
               </div>
             </div>
           </div>
 
           <div className="space-y-2 font-mono">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
+            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
               Atributos y Tipos de Datos (PostgreSQL 16):
             </span>
-            <div className="bg-[#0B101B] border border-slate-800 rounded-xl p-3.5 space-y-1 text-xs">
+            <div className="bg-[#F8FAFC] border border-slate-200 rounded-md p-3.5 space-y-1 text-xs">
               {activeTableData.fields.map((f, i) => (
-                <div key={i} className="text-emerald-400">
+                <div key={i} className="text-emerald-700">
                   {f}
                 </div>
               ))}

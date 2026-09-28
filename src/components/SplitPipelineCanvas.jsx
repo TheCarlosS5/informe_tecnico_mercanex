@@ -189,15 +189,15 @@ export default function SplitPipelineCanvas() {
   }, [isPlaying, resetKey]);
 
   return (
-    <div className="bg-[#0B101B] border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
+    <div className="bg-[#F8FAFC] border border-slate-200 rounded-lg p-6 shadow-sm space-y-4">
       {/* Component Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
         <div>
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 block mb-0.5">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-700 block mb-0.5">
             Motion Graphics Transaccional
           </span>
-          <h3 className="text-xl font-bold text-white flex items-center gap-2">
-            <Zap className="w-5 h-5 text-emerald-400" />
+          <h3 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <Zap className="w-5 h-5 text-emerald-700" />
             <span>Simulador de Flujo: ePayco Pagos Divididos (Split 1:N)</span>
           </h3>
         </div>
@@ -205,10 +205,10 @@ export default function SplitPipelineCanvas() {
         <div className="flex items-center gap-2">
           <button
             onClick={handleReset}
-            className="px-3 py-1.5 rounded-xl text-xs font-mono font-bold flex items-center gap-1.5 transition bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white hover:bg-slate-700/80"
+            className="px-3 py-1.5 rounded-md text-xs font-mono font-bold flex items-center gap-1.5 transition bg-slate-200/80 text-slate-700 border border-slate-300 hover:text-slate-900 hover:bg-slate-700/80"
             title="Reiniciar partículas transaccionales"
           >
-            <RotateCcw className="w-3.5 h-3.5 text-emerald-400" />
+            <RotateCcw className="w-3.5 h-3.5 text-emerald-700" />
             <span>Reiniciar</span>
           </button>
 
@@ -217,10 +217,10 @@ export default function SplitPipelineCanvas() {
               sound.click();
               setIsPlaying(!isPlaying);
             }}
-            className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold flex items-center gap-1.5 transition ${
-              isPlaying 
-                ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30 hover:bg-amber-500/25' 
-                : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 hover:bg-emerald-500/30'
+            className={`px-3 py-1.5 rounded-md text-xs font-mono font-bold flex items-center gap-1.5 transition ${
+              isPlaying
+                ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30 hover:bg-amber-500/25'
+                : 'bg-emerald-500/20 text-emerald-700 border border-emerald-500/40 hover:bg-emerald-500/30'
             }`}
           >
             {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
@@ -230,37 +230,37 @@ export default function SplitPipelineCanvas() {
       </div>
 
       {/* Cyber Canvas Area */}
-      <div className="relative w-full overflow-x-auto bg-[#06090F] border border-slate-800/80 rounded-2xl p-2 flex justify-center">
+      <div className="relative w-full overflow-x-auto bg-white border border-slate-200/80 rounded-lg p-2 flex justify-center">
         <canvas
           ref={canvasRef}
-          className="max-w-full h-auto rounded-xl shadow-2xl"
+          className="max-w-full h-auto rounded-md shadow-sm"
         />
       </div>
 
       {/* Real-time Telemetry Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 font-mono text-xs">
-        <div className="p-3 bg-[#06090F] border border-emerald-500/30 rounded-xl flex items-center justify-between">
+        <div className="p-3 bg-white border border-emerald-500/30 rounded-md flex items-center justify-between">
           <div>
             <span className="text-[10px] text-slate-500 uppercase tracking-wider block">Comisión Mercanex</span>
-            <span className="text-sm font-bold text-emerald-400 font-mono mt-0.5 block">$0 COP (0.0%)</span>
+            <span className="text-sm font-bold text-emerald-700 font-mono mt-0.5 block">$0 COP (0.0%)</span>
           </div>
-          <ShieldCheck className="w-6 h-6 text-emerald-400" />
+          <ShieldCheck className="w-6 h-6 text-emerald-700" />
         </div>
 
-        <div className="p-3 bg-[#06090F] border border-slate-800 rounded-xl flex items-center justify-between">
+        <div className="p-3 bg-white border border-slate-200 rounded-md flex items-center justify-between">
           <div>
             <span className="text-[10px] text-slate-500 uppercase tracking-wider block">Tarifa Pasarela ePayco</span>
-            <span className="text-sm font-bold text-cyan-400 font-mono mt-0.5 block">2.68% + $900 + IVA</span>
+            <span className="text-sm font-bold text-cyan-700 font-mono mt-0.5 block">2.68% + $900 + IVA</span>
           </div>
-          <CheckCircle2 className="w-6 h-6 text-cyan-400" />
+          <CheckCircle2 className="w-6 h-6 text-cyan-700" />
         </div>
 
-        <div className="p-3 bg-[#06090F] border border-slate-800 rounded-xl flex items-center justify-between">
+        <div className="p-3 bg-white border border-slate-200 rounded-md flex items-center justify-between">
           <div>
             <span className="text-[10px] text-slate-500 uppercase tracking-wider block">Custodia Mercanex</span>
-            <span className="text-sm font-bold text-white font-mono mt-0.5 block">CERO CUSTODIA (Seguro)</span>
+            <span className="text-sm font-bold text-slate-900 font-mono mt-0.5 block">CERO CUSTODIA (Seguro)</span>
           </div>
-          <span className="text-[11px] font-bold text-emerald-400 px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/30 rounded-md">
+          <span className="text-[11px] font-bold text-emerald-700 px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/30 rounded-md">
             PCI Compliant
           </span>
         </div>

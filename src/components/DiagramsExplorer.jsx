@@ -17,16 +17,16 @@ export default function DiagramsExplorer({ onOpenLightbox }) {
 
   return (
     <section className="space-y-4" id="cap5-diagramas">
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
         <div>
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 block mb-0.5">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-700 block mb-0.5">
             Capítulo 07 • Modelado de Software
           </span>
-          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2">
-            <GitBranch className="w-6 h-6 text-emerald-400" />
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+            <GitBranch className="w-6 h-6 text-emerald-700" />
             <span>Diagramas Oficiales de Modelado UML (16 Diagramas)</span>
           </h2>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-sm text-slate-600 mt-1">
             Modelado formal en UML (secuencias, actividades, estados, componentes y DER relacional) renderizados a 300 DPI.
           </p>
         </div>
@@ -34,14 +34,14 @@ export default function DiagramsExplorer({ onOpenLightbox }) {
         <div className="flex items-center gap-1.5">
           <button
             onClick={() => handleScroll('left')}
-            className="p-2 bg-[#0B101B] border border-slate-800 hover:bg-slate-900 text-slate-300 rounded-xl transition"
+            className="p-2 bg-[#F8FAFC] border border-slate-200 hover:bg-slate-100 text-slate-700 rounded-md transition"
             title="Desplazar a la izquierda"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
             onClick={() => handleScroll('right')}
-            className="p-2 bg-[#0B101B] border border-slate-800 hover:bg-slate-900 text-slate-300 rounded-xl transition"
+            className="p-2 bg-[#F8FAFC] border border-slate-200 hover:bg-slate-100 text-slate-700 rounded-md transition"
             title="Desplazar a la derecha"
           >
             <ChevronRight className="w-4 h-4" />
@@ -61,7 +61,7 @@ export default function DiagramsExplorer({ onOpenLightbox }) {
               sound.ping();
               onOpenLightbox(`assets/diagrams/${diag.file}`, diag.title, diag.desc);
             }}
-            className="flex-none w-[420px] bg-[#0B101B] border border-slate-800 rounded-2xl overflow-hidden shadow-xl hover:border-emerald-500/60 hover:shadow-2xl hover:shadow-emerald-950/20 transition-all duration-300 cursor-pointer group flex flex-col"
+            className="flex-none w-[420px] bg-[#F8FAFC] border border-slate-200 rounded-lg overflow-hidden shadow-sm hover:border-emerald-500/60 hover:shadow-sm hover:shadow-emerald-950/20 transition-all duration-300 cursor-pointer group flex flex-col"
           >
             <div className="w-full h-56 bg-black p-3 flex items-center justify-center relative overflow-hidden">
               <img
@@ -70,25 +70,25 @@ export default function DiagramsExplorer({ onOpenLightbox }) {
                 className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
               />
-              <div className="absolute top-2 right-2 p-1.5 bg-black/80 border border-slate-700 text-emerald-400 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="absolute top-2 right-2 p-1.5 bg-black/80 border border-slate-300 text-emerald-700 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
                 <Eye className="w-4 h-4" />
               </div>
             </div>
 
             <div className="p-4 flex-1 flex flex-col justify-between">
               <div>
-                <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded uppercase tracking-wider">
+                <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded uppercase tracking-wider">
                   {diag.category}
                 </span>
-                <h3 className="text-sm font-bold text-white mt-2 group-hover:text-emerald-300 transition-colors">
+                <h3 className="text-sm font-bold text-slate-900 mt-2 group-hover:text-emerald-800 transition-colors">
                   {diag.title}
                 </h3>
-                <p className="text-xs text-slate-400 mt-1 line-clamp-3 leading-relaxed">
+                <p className="text-xs text-slate-600 mt-1 line-clamp-3 leading-relaxed">
                   {diag.desc}
                 </p>
               </div>
 
-              <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono font-bold text-emerald-400">
+              <div className="mt-3 pt-2 border-t border-slate-200/80 flex items-center justify-between text-[11px] font-mono font-bold text-emerald-700">
                 <span>Examinar Diagrama a 300 DPI</span>
                 <span>→</span>
               </div>

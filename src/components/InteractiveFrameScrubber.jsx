@@ -96,15 +96,15 @@ export default function InteractiveFrameScrubber() {
   };
 
   return (
-    <div className="bg-[#0B101B] border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-5" id="frame-scrubber">
+    <div className="bg-[#F8FAFC] border border-slate-200 rounded-lg p-6 shadow-sm space-y-5" id="frame-scrubber">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
         <div>
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 block mb-0.5">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-700 block mb-0.5">
             Descomposición Fotograma a Fotograma
           </span>
-          <h3 className="text-xl font-bold text-white flex items-center gap-2">
-            <Film className="w-5 h-5 text-emerald-400" />
+          <h3 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <Film className="w-5 h-5 text-emerald-700" />
             <span>Motion Scrubber: Ciclo Transaccional Completo de Mercanex</span>
           </h3>
         </div>
@@ -113,18 +113,18 @@ export default function InteractiveFrameScrubber() {
           <button
             onClick={() => handleSetFrame(Math.max(0, currentFrame - 1))}
             disabled={currentFrame === 0}
-            className="p-2 border border-slate-700 bg-slate-900 rounded-xl hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-slate-900 text-slate-300 transition"
+            className="p-2 border border-slate-300 bg-slate-100 rounded-md hover:bg-slate-200 disabled:opacity-30 disabled:hover:bg-slate-100 text-slate-700 transition"
             title="Fotograma anterior"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
-          <span className="text-xs font-mono font-bold text-slate-300 px-2">
+          <span className="text-xs font-mono font-bold text-slate-700 px-2">
             {current.step}
           </span>
           <button
             onClick={() => handleSetFrame(Math.min(frames.length - 1, currentFrame + 1))}
             disabled={currentFrame === frames.length - 1}
-            className="p-2 border border-slate-700 bg-slate-900 rounded-xl hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-slate-900 text-slate-300 transition"
+            className="p-2 border border-slate-300 bg-slate-100 rounded-md hover:bg-slate-200 disabled:opacity-30 disabled:hover:bg-slate-100 text-slate-700 transition"
             title="Fotograma siguiente"
           >
             <ChevronRight className="w-4 h-4" />
@@ -134,9 +134,9 @@ export default function InteractiveFrameScrubber() {
 
       {/* Scrubber Progress Bar */}
       <div className="space-y-2 font-mono text-xs">
-        <div className="flex items-center justify-between text-slate-400 text-[11px]">
+        <div className="flex items-center justify-between text-slate-600 text-[11px]">
           <span>INICIO DE COMPRA</span>
-          <span className="text-emerald-400 font-bold">{current.title}</span>
+          <span className="text-emerald-700 font-bold">{current.title}</span>
           <span>DESPACHO SEGURO</span>
         </div>
         <div className="grid grid-cols-5 gap-1.5">
@@ -149,7 +149,7 @@ export default function InteractiveFrameScrubber() {
                   ? 'bg-emerald-400 shadow-[0_0_8px_rgba(0,245,155,0.8)]'
                   : i < currentFrame
                   ? 'bg-emerald-500/40'
-                  : 'bg-slate-800 hover:bg-slate-700'
+                  : 'bg-slate-200 hover:bg-slate-700'
               }`}
             />
           ))}
@@ -157,31 +157,31 @@ export default function InteractiveFrameScrubber() {
       </div>
 
       {/* Frame Active Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-[#06090F] border border-slate-800/80 rounded-2xl p-5">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-white border border-slate-200/80 rounded-lg p-5">
         {/* Left Column: Description & State */}
         <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
+            <span className="px-2.5 py-0.5 text-xs font-mono font-bold text-emerald-700 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
               {current.badge}
             </span>
-            <span className="px-2 py-0.5 text-[11px] font-mono font-bold text-slate-300 bg-slate-900 border border-slate-700 rounded">
+            <span className="px-2 py-0.5 text-[11px] font-mono font-bold text-slate-700 bg-slate-100 border border-slate-300 rounded">
               {current.status}
             </span>
           </div>
 
-          <h4 className="text-xl font-bold text-white leading-snug flex items-center gap-2">
-            <IconComponent className="w-5 h-5 text-emerald-400" />
+          <h4 className="text-xl font-bold text-slate-900 leading-snug flex items-center gap-2">
+            <IconComponent className="w-5 h-5 text-emerald-700" />
             {current.title}
           </h4>
 
-          <p className="text-sm text-slate-300 leading-relaxed">
+          <p className="text-sm text-slate-700 leading-relaxed">
             {current.desc}
           </p>
 
           {/* Code Console / SQL Log */}
-          <div className="bg-[#0B101B] border border-slate-800 rounded-xl p-3 text-xs text-emerald-300 font-mono overflow-x-auto shadow-inner">
-            <div className="flex items-center gap-1.5 text-slate-400 text-[10px] mb-1.5 border-b border-slate-800 pb-1">
-              <Terminal className="w-3 h-3 text-emerald-400" />
+          <div className="bg-[#F8FAFC] border border-slate-200 rounded-md p-3 text-xs text-emerald-800 font-mono overflow-x-auto shadow-inner">
+            <div className="flex items-center gap-1.5 text-slate-600 text-[10px] mb-1.5 border-b border-slate-200 pb-1">
+              <Terminal className="w-3 h-3 text-emerald-700" />
               <span>Registro de Evento en Backend</span>
             </div>
             <pre className="whitespace-pre-wrap">{current.sqlLog}</pre>
@@ -189,26 +189,26 @@ export default function InteractiveFrameScrubber() {
         </div>
 
         {/* Right Column: Visual Entity Data */}
-        <div className="bg-[#0B101B] border border-slate-800 rounded-xl p-5 shadow-xl flex flex-col justify-between">
-          <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider block mb-2">
+        <div className="bg-[#F8FAFC] border border-slate-200 rounded-md p-5 shadow-sm flex flex-col justify-between">
+          <span className="text-xs font-mono font-bold text-slate-600 uppercase tracking-wider block mb-2">
             Estado de Memoria y Entidades Transaccionales
           </span>
 
           <div className="space-y-2.5 font-mono text-xs">
             {current.visual.items && (
               <div className="space-y-1">
-                <span className="text-xs font-semibold text-slate-300">Ítems Multi-Vendedor:</span>
+                <span className="text-xs font-semibold text-slate-700">Ítems Multi-Vendedor:</span>
                 {current.visual.items.map((it, idx) => (
-                  <div key={idx} className="p-2 bg-[#06090F] border border-slate-800 rounded-lg text-xs font-medium text-slate-200 flex items-center justify-between">
+                  <div key={idx} className="p-2 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-800 flex items-center justify-between">
                     <span>{it}</span>
-                    <span className="text-emerald-400 font-bold">✓</span>
+                    <span className="text-emerald-700 font-bold">✓</span>
                   </div>
                 ))}
               </div>
             )}
 
             {current.visual.status && (
-              <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-200 font-medium">
+              <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-md text-xs text-amber-200 font-medium">
                 <strong className="text-amber-300">{current.visual.status}</strong>
                 <div className="text-[11px] text-amber-400 mt-1">{current.visual.ttl}</div>
               </div>
@@ -216,10 +216,10 @@ export default function InteractiveFrameScrubber() {
 
             {current.visual.signatureMatch && (
               <div className="space-y-1.5">
-                <div className="p-2.5 bg-blue-500/10 border border-blue-500/30 rounded-xl text-xs text-blue-300 font-mono">
+                <div className="p-2.5 bg-blue-500/10 border border-blue-500/30 rounded-md text-xs text-blue-300 font-mono">
                   {current.visual.signatureMatch}
                 </div>
-                <div className="text-xs text-slate-400 font-mono">
+                <div className="text-xs text-slate-600 font-mono">
                   {current.visual.idempotencyCheck}
                 </div>
               </div>
@@ -227,9 +227,9 @@ export default function InteractiveFrameScrubber() {
 
             {current.visual.suborders && (
               <div className="space-y-1">
-                <span className="text-xs font-bold text-emerald-400">Subórdenes Creadas:</span>
+                <span className="text-xs font-bold text-emerald-700">Subórdenes Creadas:</span>
                 {current.visual.suborders.map((sub, idx) => (
-                  <div key={idx} className="p-2 bg-emerald-500/10 border border-emerald-500/25 rounded-lg text-xs font-mono font-bold text-emerald-300">
+                  <div key={idx} className="p-2 bg-emerald-500/10 border border-emerald-500/25 rounded-lg text-xs font-mono font-bold text-emerald-800">
                     {sub}
                   </div>
                 ))}
@@ -238,23 +238,23 @@ export default function InteractiveFrameScrubber() {
 
             {current.visual.keysRevealed && (
               <div className="space-y-2">
-                <div className="p-3 bg-purple-500/10 border border-purple-500/30 rounded-xl text-xs text-purple-300 font-bold">
+                <div className="p-3 bg-purple-500/10 border border-purple-500/30 rounded-md text-xs text-purple-300 font-bold">
                   ✓ {current.visual.keysRevealed}
                 </div>
-                <div className="text-xs text-slate-300 flex items-center justify-between font-mono">
+                <div className="text-xs text-slate-700 flex items-center justify-between font-mono">
                   <span>Canal WSS:</span>
-                  <span className="text-emerald-400 font-bold">{current.visual.webSocketsChannel}</span>
+                  <span className="text-emerald-700 font-bold">{current.visual.webSocketsChannel}</span>
                 </div>
-                <div className="text-xs text-slate-400">
-                  Latencia P95: <strong className="text-white">{current.visual.slaLatency}</strong>
+                <div className="text-xs text-slate-600">
+                  Latencia P95: <strong className="text-slate-900">{current.visual.slaLatency}</strong>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400">
+          <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between text-xs font-mono text-slate-600">
             <span>Mercanex State Engine v3.0</span>
-            <span className="font-bold text-emerald-400">Paso {currentFrame + 1} de 5</span>
+            <span className="font-bold text-emerald-700">Paso {currentFrame + 1} de 5</span>
           </div>
         </div>
       </div>

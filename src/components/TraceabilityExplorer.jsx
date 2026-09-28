@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { 
-  GitMerge, CheckCircle2, ArrowRight, Layers, Image as ImageIcon, 
-  GitFork, Database, ShieldCheck, Sparkles, Filter, Eye, ExternalLink 
+import {
+  GitMerge, CheckCircle2, ArrowRight, Layers, Image as ImageIcon,
+  GitFork, Database, ShieldCheck, Sparkles, Filter, Eye, ExternalLink
 } from 'lucide-react';
 import { sound } from '../lib/soundSynthesizer';
 import semanticData from '../data/mercanex_semantic_inventory.json';
@@ -119,31 +119,31 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
   return (
     <section id="traceability-section" className="scroll-mt-24 space-y-8">
       {/* Chapter Title & Header */}
-      <div className="border-b border-slate-800 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="border-b border-slate-200 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs uppercase tracking-wider font-semibold mb-2">
+          <div className="flex items-center gap-2 text-emerald-700 font-mono text-xs uppercase tracking-wider font-semibold mb-2">
             <GitMerge className="w-4 h-4" />
             <span>Capítulo 09 • Trazabilidad End-to-End</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             Matriz de Trazabilidad y Linaje Causal de Ingeniería
           </h2>
-          <p className="text-slate-400 text-sm max-w-3xl mt-1.5 leading-relaxed">
+          <p className="text-slate-600 text-sm max-w-3xl mt-1.5 leading-relaxed">
             Demostración empírica de conformidad técnica: cada Historia de Usuario se descompone en un Requisito Funcional, se detalla en especificaciones ERF, se plasma en un Mockup UI, se modela en diagramas UML, persiste en tablas relacionales de PostgreSQL 16 y se valida mediante Casos de Prueba formalizados.
           </p>
         </div>
 
         {/* View Mode Toggle */}
-        <div className="flex items-center gap-1.5 p-1 bg-[#0B101B] rounded-xl border border-slate-800 self-start md:self-auto font-mono text-xs">
+        <div className="flex items-center gap-1.5 p-1 bg-[#F8FAFC] rounded-md border border-slate-200 self-start md:self-auto font-mono text-xs">
           <button
             onClick={() => {
               sound.click();
               setViewMode('lineage');
             }}
             className={`px-3 py-1.5 rounded-lg font-semibold transition ${
-              viewMode === 'lineage' 
-                ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-sm' 
-                : 'text-slate-400 hover:text-slate-200'
+              viewMode === 'lineage'
+                ? 'bg-emerald-500/20 text-emerald-700 border border-emerald-500/40 shadow-sm'
+                : 'text-slate-600 hover:text-slate-800'
             }`}
           >
             Linaje Causal Dinámico
@@ -154,9 +154,9 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
               setViewMode('matrix');
             }}
             className={`px-3 py-1.5 rounded-lg font-semibold transition ${
-              viewMode === 'matrix' 
-                ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-sm' 
-                : 'text-slate-400 hover:text-slate-200'
+              viewMode === 'matrix'
+                ? 'bg-emerald-500/20 text-emerald-700 border border-emerald-500/40 shadow-sm'
+                : 'text-slate-600 hover:text-slate-800'
             }`}
           >
             Matriz Tabular Completa
@@ -166,10 +166,10 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
 
       {viewMode === 'lineage' ? (
         /* DYNAMIC CAUSAL LINEAGE EXPLORER */
-        <div className="bg-[#0B101B] rounded-2xl border border-slate-800 shadow-xl p-6 space-y-6">
+        <div className="bg-[#F8FAFC] rounded-lg border border-slate-200 shadow-sm p-6 space-y-6">
           {/* Module Selector Ribbon */}
           <div>
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 block mb-2">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-600 block mb-2">
               1. Selecciona un Módulo Funcional para Iniciar la Cadena Causal:
             </span>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 font-mono">
@@ -179,10 +179,10 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
                   <button
                     key={m.rf}
                     onClick={() => handleSelectRF(m.rf)}
-                    className={`p-3 rounded-xl border text-center transition flex flex-col items-center justify-center ${
+                    className={`p-3 rounded-md border text-center transition flex flex-col items-center justify-center ${
                       isSelected
-                        ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50 shadow-md ring-1 ring-emerald-500/30'
-                        : 'bg-[#06090F] text-slate-400 border-slate-800 hover:border-slate-700 hover:text-slate-200'
+                        ? 'bg-emerald-500/20 text-emerald-700 border-emerald-500/50 shadow-md ring-1 ring-emerald-500/30'
+                        : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:text-slate-800'
                     }`}
                   >
                     <span className="text-xs font-bold">{m.rf}</span>
@@ -194,17 +194,17 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
           </div>
 
           {/* Interactive Causal Chain Stage */}
-          <div className="p-6 bg-[#06090F] rounded-2xl border border-slate-800/80 space-y-6">
-            <div className="flex flex-wrap items-center justify-between border-b border-slate-800 pb-3 gap-2 font-mono">
+          <div className="p-6 bg-white rounded-lg border border-slate-200/80 space-y-6">
+            <div className="flex flex-wrap items-center justify-between border-b border-slate-200 pb-3 gap-2 font-mono">
               <div>
-                <span className="text-xs font-bold text-emerald-400 uppercase">
+                <span className="text-xs font-bold text-emerald-700 uppercase">
                   Cadena Activa: {activeModule.rf} — {activeModule.name}
                 </span>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Origen de Requisito: <strong className="text-white">{activeModule.hu}</strong>
+                <p className="text-xs text-slate-600 mt-0.5">
+                  Origen de Requisito: <strong className="text-slate-900">{activeModule.hu}</strong>
                 </p>
               </div>
-              <span className="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-full text-[11px] font-bold">
+              <span className="px-2.5 py-1 bg-emerald-500/10 text-emerald-700 border border-emerald-500/30 rounded-full text-[11px] font-bold">
                 Trazabilidad 100% Conforme
               </span>
             </div>
@@ -212,9 +212,9 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
             {/* Step-by-Step Causal Columns */}
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4 font-mono">
               {/* Node 1: ERF Selection */}
-              <div className="p-4 bg-[#0B101B] rounded-xl border border-slate-800 space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
-                  <Layers className="w-3.5 h-3.5 text-emerald-400" />
+              <div className="p-4 bg-[#F8FAFC] rounded-md border border-slate-200 space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1">
+                  <Layers className="w-3.5 h-3.5 text-emerald-700" />
                   <span>Requisito ERF</span>
                 </span>
                 <div className="space-y-1 max-h-48 overflow-y-auto pr-1 scrollbar-thin">
@@ -226,8 +226,8 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
                         onClick={() => handleSelectERF(erfId)}
                         className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-bold transition ${
                           isERFSelected
-                            ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-                            : 'bg-[#06090F] text-slate-400 hover:text-white border border-slate-800/60'
+                            ? 'bg-emerald-500/20 text-emerald-700 border border-emerald-500/40'
+                            : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200/60'
                         }`}
                       >
                         {erfId}
@@ -238,9 +238,9 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
               </div>
 
               {/* Node 2: Linked Mockup */}
-              <div className="p-4 bg-[#0B101B] rounded-xl border border-slate-800 space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
-                  <ImageIcon className="w-3.5 h-3.5 text-cyan-400" />
+              <div className="p-4 bg-[#F8FAFC] rounded-md border border-slate-200 space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1">
+                  <ImageIcon className="w-3.5 h-3.5 text-cyan-700" />
                   <span>Mockup de UI/UX</span>
                 </span>
                 <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1 scrollbar-thin">
@@ -251,19 +251,19 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
                         sound.ping();
                         onOpenLightbox(`assets/mockups/${mId}.png`, `Mockup ${mId}`, `Pantalla oficial de ${activeModule.rf}`);
                       }}
-                      className="cursor-pointer p-2 rounded-lg bg-[#06090F] hover:bg-slate-900 text-cyan-400 border border-slate-800 hover:border-cyan-500/40 flex items-center justify-between text-xs font-semibold transition"
+                      className="cursor-pointer p-2 rounded-lg bg-white hover:bg-slate-100 text-cyan-700 border border-slate-200 hover:border-cyan-500/40 flex items-center justify-between text-xs font-semibold transition"
                     >
                       <span>{mId}.png</span>
-                      <ExternalLink className="w-3 h-3 text-cyan-400" />
+                      <ExternalLink className="w-3 h-3 text-cyan-700" />
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Node 3: Linked UML Diagram */}
-              <div className="p-4 bg-[#0B101B] rounded-xl border border-slate-800 space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
-                  <GitFork className="w-3.5 h-3.5 text-emerald-400" />
+              <div className="p-4 bg-[#F8FAFC] rounded-md border border-slate-200 space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1">
+                  <GitFork className="w-3.5 h-3.5 text-emerald-700" />
                   <span>Diagramas UML</span>
                 </span>
                 <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1 scrollbar-thin">
@@ -276,10 +276,10 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
                           sound.ping();
                           onOpenLightbox(`assets/diagrams/${file}`, `Diagrama ${dId}`, `Diagrama de ingeniería oficial para ${activeModule.rf}`);
                         }}
-                        className="cursor-pointer p-2 rounded-lg bg-[#06090F] hover:bg-slate-900 text-emerald-400 border border-slate-800 hover:border-emerald-500/40 flex items-center justify-between text-xs font-semibold transition"
+                        className="cursor-pointer p-2 rounded-lg bg-white hover:bg-slate-100 text-emerald-700 border border-slate-200 hover:border-emerald-500/40 flex items-center justify-between text-xs font-semibold transition"
                       >
                         <span>{dId}</span>
-                        <Eye className="w-3 h-3 text-emerald-400" />
+                        <Eye className="w-3 h-3 text-emerald-700" />
                       </div>
                     );
                   })}
@@ -287,8 +287,8 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
               </div>
 
               {/* Node 4: PostgreSQL 16 Tables */}
-              <div className="p-4 bg-[#0B101B] rounded-xl border border-slate-800 space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
+              <div className="p-4 bg-[#F8FAFC] rounded-md border border-slate-200 space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1">
                   <Database className="w-3.5 h-3.5 text-amber-400" />
                   <span>Persistencia BD</span>
                 </span>
@@ -296,7 +296,7 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
                   {activeModule.tables.map((tName) => (
                     <div
                       key={tName}
-                      className="p-2 rounded-lg bg-[#06090F] text-amber-300 border border-slate-800 text-xs font-medium"
+                      className="p-2 rounded-lg bg-white text-amber-300 border border-slate-200 text-xs font-medium"
                     >
                       <span>{tName}</span>
                     </div>
@@ -305,8 +305,8 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
               </div>
 
               {/* Node 5: QA Test Cases */}
-              <div className="p-4 bg-[#0B101B] rounded-xl border border-slate-800 space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
+              <div className="p-4 bg-[#F8FAFC] rounded-md border border-slate-200 space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5 text-rose-400" />
                   <span>Casos de Prueba</span>
                 </span>
@@ -314,10 +314,10 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
                   {activeModule.tests.map((cpId) => (
                     <div
                       key={cpId}
-                      className="p-2 rounded-lg bg-[#06090F] text-rose-300 border border-slate-800 text-xs font-bold flex items-center justify-between"
+                      className="p-2 rounded-lg bg-white text-rose-300 border border-slate-200 text-xs font-bold flex items-center justify-between"
                     >
                       <span>{cpId}</span>
-                      <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                      <CheckCircle2 className="w-3 h-3 text-emerald-700" />
                     </div>
                   ))}
                 </div>
@@ -327,11 +327,11 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
         </div>
       ) : (
         /* FULL TABULAR MATRIX (Matching Table T089) */
-        <div className="bg-[#0B101B] rounded-2xl border border-slate-800 shadow-xl overflow-hidden font-mono">
+        <div className="bg-[#F8FAFC] rounded-lg border border-slate-200 shadow-sm overflow-hidden font-mono">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="bg-[#06090F] text-slate-400 uppercase text-[11px] tracking-wider border-b border-slate-800">
+                <tr className="bg-white text-slate-600 uppercase text-[11px] tracking-wider border-b border-slate-200">
                   <th className="py-3.5 px-4 font-semibold">Módulo RF</th>
                   <th className="py-3.5 px-4 font-semibold">Especificaciones ERF</th>
                   <th className="py-3.5 px-4 font-semibold">Mockups UI</th>
@@ -341,22 +341,22 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
                   <th className="py-3.5 px-4 font-semibold">Estado</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/80 text-slate-300">
+              <tbody className="divide-y divide-slate-200/80 text-slate-700">
                 {TRACE_MODULES.map((row) => (
-                  <tr key={row.rf} className="hover:bg-slate-900/60 transition">
-                    <td className="py-3 px-4 font-bold text-white">
-                      <span className="px-2 py-0.5 bg-slate-900 border border-slate-800 rounded text-emerald-400">
+                  <tr key={row.rf} className="hover:bg-slate-100/60 transition">
+                    <td className="py-3 px-4 font-bold text-slate-900">
+                      <span className="px-2 py-0.5 bg-slate-100 border border-slate-200 rounded text-emerald-700">
                         {row.rf}
                       </span>
-                      <div className="text-[11px] font-sans font-normal text-slate-400 mt-1">{row.name}</div>
+                      <div className="text-[11px] font-sans font-normal text-slate-600 mt-1">{row.name}</div>
                     </td>
-                    <td className="py-3 px-4 text-emerald-400 font-semibold">
+                    <td className="py-3 px-4 text-emerald-700 font-semibold">
                       {row.erfs[0]} a {row.erfs[row.erfs.length - 1]} ({row.erfs.length} ERFs)
                     </td>
-                    <td className="py-3 px-4 text-cyan-400">
+                    <td className="py-3 px-4 text-cyan-700">
                       {row.mockups[0]} a {row.mockups[row.mockups.length - 1]}
                     </td>
-                    <td className="py-3 px-4 text-emerald-300">
+                    <td className="py-3 px-4 text-emerald-800">
                       {row.diagrams.join(', ')}
                     </td>
                     <td className="py-3 px-4 text-amber-300">
@@ -366,8 +366,8 @@ export default function TraceabilityExplorer({ onOpenLightbox }) {
                       {row.tests.join(', ')}
                     </td>
                     <td className="py-3 px-4">
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                        <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-700 border border-emerald-500/30">
+                        <CheckCircle2 className="w-3 h-3 text-emerald-700" />
                         <span>Verificado</span>
                       </span>
                     </td>

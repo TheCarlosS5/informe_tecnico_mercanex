@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { 
-  Server, Shield, Database, Cpu, Network, Terminal, CheckCircle2, 
+import {
+  Server, Shield, Database, Cpu, Network, Terminal, CheckCircle2,
   Layers, ExternalLink, Code2, Lock, ArrowUpRight
 } from 'lucide-react';
 import TechTerm from './TechTerm';
@@ -37,7 +37,7 @@ server {
     server_name api.mercanex.co;
     ssl_certificate /etc/ssl/mercanex_ecc.crt;
     ssl_protocols TLSv1.2 TLSv1.3;
-    
+
     add_header X-Frame-Options "DENY" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
@@ -187,10 +187,10 @@ export default function VideoInfrastructureScroll({ onSelectTerm }) {
   }, { scope: containerRef });
 
   return (
-    <section 
-      ref={containerRef} 
-      id="video-infrastructure-scroll" 
-      className="relative py-12 border-t border-slate-800/80 bg-[#06090F] overflow-hidden"
+    <section
+      ref={containerRef}
+      id="video-infrastructure-scroll"
+      className="relative py-12 border-t border-slate-200/80 bg-white overflow-hidden"
     >
       {/* Background Cyber Video Loop with Multi-layer Gradients */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -200,39 +200,39 @@ export default function VideoInfrastructureScroll({ onSelectTerm }) {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-25 filter contrast-125 brightness-75"
+          className="w-full h-full object-cover opacity-15 filter saturate-50"
         >
           <source src="assets/videos/cyber_server_scroll.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-[#06090F]/80 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-white/85 backdrop-blur-[2px]" />
         <div className="absolute inset-0 bg-grid-cyber opacity-30" />
       </div>
 
       <div className="relative z-10 space-y-10">
         {/* Section Header */}
         <div className="px-4 sm:px-6">
-          <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs uppercase tracking-widest font-semibold">
+          <div className="flex items-center gap-2 text-emerald-700 font-mono text-xs uppercase tracking-widest font-semibold">
             <Server className="w-4 h-4" />
             <span>Capítulo 03 • Infraestructura & Stack Tecnológico Integral</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight mt-1 flex items-center gap-2">
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight mt-1 flex items-center gap-2">
             <span>Arquitectura en Capas: Del Borde Nginx a la Base PostgreSQL</span>
           </h2>
-          <p className="text-slate-400 text-sm max-w-2xl mt-1">
+          <p className="text-slate-600 text-sm max-w-2xl mt-1">
             Inspección profunda de las 5 capas de software y hardware que sustentan la plataforma Mercanex V3.0 con alta disponibilidad, concurrencia ACID y cero custodia de fondos.
           </p>
         </div>
 
         {/* 2-Column Split: Sticky Interactive Layer Inspector on Left, Scroll Triggers on Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start px-4 sm:px-6">
-          
+
           {/* LEFT: Pinned Dynamic Layer Inspector HUD (Sticky on Desktop) */}
           <div className="lg:col-span-6 lg:sticky lg:top-24 z-20 space-y-4">
-            <div className="p-6 rounded-2xl bg-[#0B101B]/95 border border-emerald-500/40 shadow-2xl backdrop-blur-md space-y-5">
-              
+            <div className="p-6 rounded-lg bg-[#F8FAFC]/95 border border-emerald-500/40 shadow-md backdrop-blur-md space-y-5">
+
               {/* Header Badges */}
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/10 text-emerald-700 border border-emerald-500/30">
                   <Cpu className="w-3.5 h-3.5" />
                   {activeLayer.level} • {activeLayer.tech}
                 </span>
@@ -243,10 +243,10 @@ export default function VideoInfrastructureScroll({ onSelectTerm }) {
 
               {/* Layer Title & Mission */}
               <div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
                   {activeLayer.name}
                 </h3>
-                <p className="text-slate-300 text-xs sm:text-sm mt-1.5 leading-relaxed">
+                <p className="text-slate-700 text-xs sm:text-sm mt-1.5 leading-relaxed">
                   {activeLayer.role}
                 </p>
               </div>
@@ -254,23 +254,23 @@ export default function VideoInfrastructureScroll({ onSelectTerm }) {
               {/* Dynamic Telemetry Metric Chips */}
               <div className="grid grid-cols-3 gap-2 font-mono text-xs">
                 {Object.entries(activeLayer.metrics).map(([k, v]) => (
-                  <div key={k} className="p-2.5 rounded-xl bg-[#06090F] border border-slate-800">
+                  <div key={k} className="p-2.5 rounded-xl bg-white border border-slate-200">
                     <span className="text-[10px] text-slate-500 block uppercase tracking-wider">{k}</span>
-                    <span className="text-emerald-400 font-bold text-[11px] truncate block mt-0.5">{v}</span>
+                    <span className="text-emerald-700 font-bold text-[11px] truncate block mt-0.5">{v}</span>
                   </div>
                 ))}
               </div>
 
               {/* Live Config / Code Snippet */}
-              <div className="rounded-xl bg-[#06090F] border border-slate-800 p-3 font-mono text-[11px] overflow-hidden">
-                <div className="flex items-center justify-between text-slate-500 pb-2 mb-2 border-b border-slate-800/80 text-[10px]">
-                  <span className="flex items-center gap-1.5 text-slate-400">
-                    <Code2 className="w-3.5 h-3.5 text-emerald-400" />
+              <div className="rounded-xl bg-white border border-slate-200 p-3 font-mono text-[11px] overflow-hidden">
+                <div className="flex items-center justify-between text-slate-500 pb-2 mb-2 border-b border-slate-200/80 text-[10px]">
+                  <span className="flex items-center gap-1.5 text-slate-600">
+                    <Code2 className="w-3.5 h-3.5 text-emerald-700" />
                     <span>config_spec.sys</span>
                   </span>
-                  <span className="text-emerald-400">PRODUCTION_READY</span>
+                  <span className="text-emerald-700">PRODUCTION_READY</span>
                 </div>
-                <pre className="text-slate-300 overflow-x-auto p-1 leading-relaxed max-h-56 text-[10.5px]">
+                <pre className="text-slate-700 overflow-x-auto p-1 leading-relaxed max-h-56 text-[10.5px]">
                   <code>{activeLayer.configSnippet}</code>
                 </pre>
               </div>
@@ -286,9 +286,9 @@ export default function VideoInfrastructureScroll({ onSelectTerm }) {
                       scrollToAnchor(`#trigger-${l.id}`);
                     }}
                     className={`px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition ${
-                      i === activeLayerIndex 
-                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' 
-                        : 'bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800'
+                      i === activeLayerIndex
+                        ? 'bg-emerald-500/20 text-emerald-700 border border-emerald-500/40'
+                        : 'bg-slate-100 text-slate-600 hover:text-slate-800 border border-slate-200'
                     }`}
                   >
                     {l.level}
@@ -308,34 +308,34 @@ export default function VideoInfrastructureScroll({ onSelectTerm }) {
                 <div
                   key={layer.id}
                   id={`trigger-${layer.id}`}
-                  className={`infrastructure-trigger p-6 sm:p-7 rounded-2xl border transition-all duration-300 ${
-                    isActive 
-                      ? 'bg-[#0B101B] border-emerald-500/50 shadow-xl shadow-emerald-950/20 ring-1 ring-emerald-500/20' 
-                      : 'bg-[#0B101B]/50 border-slate-800/80 opacity-70 hover:opacity-90'
+                  className={`infrastructure-trigger p-6 sm:p-7 rounded-lg border transition-all duration-300 ${
+                    isActive
+                      ? 'bg-[#F8FAFC] border-emerald-500/50 shadow-sm shadow-emerald-950/20 ring-1 ring-emerald-500/20'
+                      : 'bg-[#F8FAFC]/50 border-slate-200/80 opacity-70 hover:opacity-90'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded border border-emerald-500/20">
+                    <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-500/10 px-2.5 py-1 rounded border border-emerald-500/20">
                       {layer.level}
                     </span>
                     <span className="text-xs font-mono text-slate-500">{layer.tech}</span>
                   </div>
 
-                  <h4 className="text-xl font-bold text-white tracking-tight">
+                  <h4 className="text-xl font-bold text-slate-900 tracking-tight">
                     {layer.name}
                   </h4>
-                  <p className="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
+                  <p className="text-slate-700 text-xs sm:text-sm mt-2 leading-relaxed">
                     {layer.role}
                   </p>
 
-                  <div className="mt-4 pt-4 border-t border-slate-800 space-y-2.5">
-                    <span className="text-xs font-mono uppercase tracking-wider text-slate-400 block font-semibold">
+                  <div className="mt-4 pt-4 border-t border-slate-200 space-y-2.5">
+                    <span className="text-xs font-mono uppercase tracking-wider text-slate-600 block font-semibold">
                       Especificaciones de Ingeniería Oficiales:
                     </span>
-                    <ul className="space-y-2 text-xs text-slate-300">
+                    <ul className="space-y-2 text-xs text-slate-700">
                       {layer.specs.map((spec, sIdx) => (
                         <li key={sIdx} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                          <CheckCircle2 className="w-4 h-4 text-emerald-700 mt-0.5 flex-shrink-0" />
                           <span>{spec}</span>
                         </li>
                       ))}

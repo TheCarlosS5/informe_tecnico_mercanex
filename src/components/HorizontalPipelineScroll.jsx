@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { 
-  ShoppingCart, Clock, Split, ShieldCheck, KeyRound, Download, 
+import {
+  ShoppingCart, Clock, Split, ShieldCheck, KeyRound, Download,
   ArrowRight, Check, Code2, Database, Terminal, ChevronRight, Zap
 } from 'lucide-react';
 import { sound } from '../lib/soundSynthesizer';
@@ -205,24 +205,24 @@ export default function HorizontalPipelineScroll() {
   }, { scope: sectionRef });
 
   return (
-    <div 
-      ref={sectionRef} 
-      id="horizontal-pipeline" 
-      className="relative w-full h-screen overflow-hidden bg-[#06090F] border-y border-slate-800/80 flex flex-col justify-between py-6 select-none"
+    <div
+      ref={sectionRef}
+      id="horizontal-pipeline"
+      className="relative w-full h-screen overflow-hidden bg-white border-y border-slate-200/80 flex flex-col justify-between py-6 select-none"
     >
       {/* Background Cyber Grid */}
       <div className="absolute inset-0 bg-grid-cyber opacity-35 pointer-events-none" />
 
       {/* Top Section Header & Telemetry Status HUD */}
-      <div className="relative z-10 px-6 sm:px-12 flex flex-wrap items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+      <div className="relative z-10 px-6 sm:px-12 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 pb-4">
         <div>
-          <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs uppercase tracking-widest font-semibold">
+          <div className="flex items-center gap-2 text-emerald-700 font-mono text-xs uppercase tracking-widest font-semibold">
             <Zap className="w-3.5 h-3.5" />
             <span>Capítulo 04 • Pipeline Transaccional de Extremo a Extremo</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mt-1 flex items-center gap-2">
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1 flex items-center gap-2">
             <span>Ciclo de Vida de una Transacción Atómica</span>
-            <span className="text-xs font-mono font-normal px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+            <span className="text-xs font-mono font-normal px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 border border-emerald-500/30">
               HORIZONTAL SCROLL PINNED
             </span>
           </h2>
@@ -230,21 +230,21 @@ export default function HorizontalPipelineScroll() {
 
         {/* Global Pipeline Indicators */}
         <div className="flex items-center gap-3 font-mono text-xs">
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800">
+          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-md bg-slate-100 border border-slate-200">
             <span className="text-slate-500">ETAPA ACTUAL:</span>
-            <span className="text-emerald-400 font-bold">{selectedStage + 1} / {pipelineStages.length}</span>
+            <span className="text-emerald-700 font-bold">{selectedStage + 1} / {pipelineStages.length}</span>
           </div>
-          <div className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-2">
+          <div className="px-3 py-1.5 rounded-md bg-slate-100 border border-slate-200 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-slate-300 font-semibold">{pipelineStages[selectedStage].protocol}</span>
+            <span className="text-slate-700 font-semibold">{pipelineStages[selectedStage].protocol}</span>
           </div>
         </div>
       </div>
 
       {/* HORIZONTAL TRACK CONTAINER (Pinned and moved by GSAP ScrollTrigger) */}
       <div className="relative z-10 flex-1 flex items-center overflow-visible">
-        <div 
-          ref={trackRef} 
+        <div
+          ref={trackRef}
           className="flex gap-6 sm:gap-8 px-6 sm:px-12 will-change-transform"
           style={{ width: 'fit-content' }}
         >
@@ -255,43 +255,43 @@ export default function HorizontalPipelineScroll() {
               <div
                 key={stage.id}
                 onClick={() => handleStageSelect(idx)}
-                className={`w-[85vw] sm:w-[480px] lg:w-[520px] flex-shrink-0 p-6 sm:p-7 rounded-2xl border transition-all duration-300 flex flex-col justify-between cursor-pointer ${
-                  isSelected 
-                    ? 'bg-[#0B101B] border-emerald-500/60 shadow-2xl shadow-emerald-950/30 ring-1 ring-emerald-500/30' 
-                    : 'bg-[#0B101B]/70 border-slate-800/80 hover:border-slate-700 opacity-90'
+                className={`w-[85vw] sm:w-[480px] lg:w-[520px] flex-shrink-0 p-6 sm:p-7 rounded-lg border transition-all duration-300 flex flex-col justify-between cursor-pointer ${
+                  isSelected
+                    ? 'bg-[#F8FAFC] border-emerald-500/60 shadow-sm shadow-emerald-950/30 ring-1 ring-emerald-500/30'
+                    : 'bg-[#F8FAFC]/70 border-slate-200/80 hover:border-slate-300 opacity-90'
                 }`}
               >
                 {/* Stage Header */}
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
-                      <span className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono font-black text-sm flex items-center justify-center">
+                      <span className="w-8 h-8 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 font-mono font-black text-sm flex items-center justify-center">
                         {stage.step}
                       </span>
-                      <span className="font-mono text-[11px] text-slate-400 uppercase tracking-wider font-semibold">
+                      <span className="font-mono text-[11px] text-slate-600 uppercase tracking-wider font-semibold">
                         {stage.code}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2 font-mono text-[11px]">
-                      <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-400">
+                      <span className="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600">
                         {stage.latency}
                       </span>
                     </div>
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-snug">
+                  <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-snug">
                     {stage.title}
                   </h3>
-                  <p className="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
+                  <p className="text-slate-700 text-xs sm:text-sm mt-2 leading-relaxed">
                     {stage.shortDesc}
                   </p>
 
                   {/* Bullet Spec Points */}
-                  <ul className="mt-4 space-y-2 text-xs text-slate-400">
+                  <ul className="mt-4 space-y-2 text-xs text-slate-600">
                     {stage.details.map((point, pIdx) => (
                       <li key={pIdx} className="flex items-start gap-2">
-                        <Check className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <Check className="w-3.5 h-3.5 text-emerald-700 mt-0.5 flex-shrink-0" />
                         <span>{point}</span>
                       </li>
                     ))}
@@ -299,16 +299,16 @@ export default function HorizontalPipelineScroll() {
                 </div>
 
                 {/* Technical Payload Inspector Card */}
-                <div className="mt-6 pt-4 border-t border-slate-800/80">
-                  <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-2">
-                    <span className="flex items-center gap-1.5 text-emerald-400 font-semibold">
+                <div className="mt-6 pt-4 border-t border-slate-200/80">
+                  <div className="flex items-center justify-between text-[11px] font-mono text-slate-600 mb-2">
+                    <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
                       <Code2 className="w-3.5 h-3.5" />
                       <span>TELEMETRY_PAYLOAD</span>
                     </span>
                     <span className="text-[10px] text-slate-500 uppercase">{stage.security}</span>
                   </div>
-                  
-                  <div className="p-3 rounded-xl bg-[#06090F] border border-slate-800/80 font-mono text-[11px] text-slate-300 overflow-x-auto max-h-36">
+
+                  <div className="p-3 rounded-md bg-white border border-slate-200/80 font-mono text-[11px] text-slate-700 overflow-x-auto max-h-36">
                     <pre className="text-[10.5px] leading-relaxed">
                       <code>{JSON.stringify(stage.technicalPayload, null, 2)}</code>
                     </pre>
@@ -318,7 +318,7 @@ export default function HorizontalPipelineScroll() {
                 {/* Bottom Stage Progress Ribbon */}
                 <div className="mt-4 flex items-center justify-between text-[11px] font-mono text-slate-500">
                   <span>ETAPA {idx + 1} DE {pipelineStages.length}</span>
-                  <span className="text-emerald-400 font-bold flex items-center gap-1">
+                  <span className="text-emerald-700 font-bold flex items-center gap-1">
                     <span>EXPLORAR</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </span>
@@ -330,10 +330,10 @@ export default function HorizontalPipelineScroll() {
       </div>
 
       {/* Bottom Visual Scroll Timeline Bar */}
-      <div className="relative z-10 px-6 sm:px-12 flex flex-wrap items-center justify-between gap-4 border-t border-slate-800/80 pt-3 text-xs font-mono text-slate-400">
+      <div className="relative z-10 px-6 sm:px-12 flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/80 pt-3 text-xs font-mono text-slate-600">
         <div className="flex items-center gap-2">
           <span className="text-slate-500">CONTROL DE DESPLAZAMIENTO:</span>
-          <span className="text-emerald-400 font-bold">Usa el Scroll Vertical o haz clic en las etapas</span>
+          <span className="text-emerald-700 font-bold">Usa el Scroll Vertical o haz clic en las etapas</span>
         </div>
 
         {/* Stage Dot Markers */}
@@ -343,9 +343,9 @@ export default function HorizontalPipelineScroll() {
               key={st.id}
               onClick={() => handleStageSelect(i)}
               className={`h-2 rounded-full transition-all duration-300 ${
-                i === selectedStage 
-                  ? 'w-8 bg-emerald-400' 
-                  : 'w-2 bg-slate-800 hover:bg-slate-700'
+                i === selectedStage
+                  ? 'w-8 bg-emerald-400'
+                  : 'w-2 bg-slate-200 hover:bg-slate-700'
               }`}
               title={`Etapa ${st.step}: ${st.title}`}
             />

@@ -60,9 +60,9 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen bg-[#06090F] text-slate-200 flex flex-col antialiased selection:bg-emerald-500/30 selection:text-emerald-300 ${isPresentationMode ? 'presentation-mode' : ''}`}>
+    <div className={`min-h-screen bg-white text-slate-800 flex flex-col antialiased selection:bg-emerald-500/30 selection:text-emerald-800 ${isPresentationMode ? 'presentation-mode' : ''}`}>
       {/* HUD Header Sticky con Zoom TV, Command Palette, Audio Synthesizer y Modo Presentación */}
-      <HeaderHUD 
+      <HeaderHUD
         onOpenDictionary={() => setIsDictionaryOpen(true)}
         onOpenSearch={() => setIsSearchOpen(true)}
         isPresentationMode={isPresentationMode}
@@ -71,7 +71,7 @@ export default function App() {
 
       {/* Contenedor Principal Fijo Desktop (Estilo Impeccable Dark Cyber) */}
       <main className="flex-1 w-full max-w-[1520px] mx-auto px-4 md:px-6 py-6 space-y-16">
-        
+
         {/* HERO CINEMÁTICO: Video Scroll con Profundidad GSAP & Telemetría SENA CIES Huila */}
         <CinematicHeroScroll onSelectTerm={setSelectedTerm} />
 

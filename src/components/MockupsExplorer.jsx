@@ -43,16 +43,16 @@ export default function MockupsExplorer({ onOpenLightbox }) {
 
   return (
     <section className="space-y-4" id="cap4-mockups">
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
         <div>
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 block mb-0.5">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-700 block mb-0.5">
             Capítulo 06 • Interfaces de Usuario UI/UX
           </span>
-          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2">
-            <LayoutGrid className="w-6 h-6 text-emerald-400" />
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+            <LayoutGrid className="w-6 h-6 text-emerald-700" />
             <span>Catálogo Completo de Mockups UI/UX (72 Pantallas)</span>
           </h2>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-sm text-slate-600 mt-1">
             Diseño de interfaces en alta definición organizadas por módulos funcionales del SRS.
           </p>
         </div>
@@ -65,7 +65,7 @@ export default function MockupsExplorer({ onOpenLightbox }) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Buscar pantalla (ej: 2FA, Carrito, RUT)..."
-            className="w-full pl-9 pr-3 py-2 text-xs bg-[#0B101B] border border-slate-700/80 rounded-xl text-white font-mono placeholder:text-slate-500 focus:outline-none focus:border-emerald-400 shadow-inner"
+            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F8FAFC] border border-slate-300/80 rounded-md text-slate-900 font-mono placeholder:text-slate-400 focus:outline-none focus:border-emerald-400 shadow-inner"
           />
         </div>
       </div>
@@ -81,10 +81,10 @@ export default function MockupsExplorer({ onOpenLightbox }) {
                 setActiveCategory(cat.id);
                 if (trackRef.current) trackRef.current.scrollTo({ left: 0, behavior: 'smooth' });
               }}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-xl whitespace-nowrap transition ${
+              className={`px-3 py-1.5 text-xs font-semibold rounded-md whitespace-nowrap transition ${
                 activeCategory === cat.id
-                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-sm'
-                  : 'bg-[#0B101B] border border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                  ? 'bg-emerald-500/20 text-emerald-700 border border-emerald-500/40 shadow-sm'
+                  : 'bg-[#F8FAFC] border border-slate-200 text-slate-600 hover:text-slate-800 hover:bg-slate-100'
               }`}
             >
               {cat.label}
@@ -95,14 +95,14 @@ export default function MockupsExplorer({ onOpenLightbox }) {
         <div className="flex items-center gap-1.5">
           <button
             onClick={() => handleScroll('left')}
-            className="p-2 bg-[#0B101B] border border-slate-800 hover:bg-slate-900 text-slate-300 rounded-xl transition"
+            className="p-2 bg-[#F8FAFC] border border-slate-200 hover:bg-slate-100 text-slate-700 rounded-md transition"
             title="Desplazar a la izquierda"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
             onClick={() => handleScroll('right')}
-            className="p-2 bg-[#0B101B] border border-slate-800 hover:bg-slate-900 text-slate-300 rounded-xl transition"
+            className="p-2 bg-[#F8FAFC] border border-slate-200 hover:bg-slate-100 text-slate-700 rounded-md transition"
             title="Desplazar a la derecha"
           >
             <ChevronRight className="w-4 h-4" />
@@ -116,7 +116,7 @@ export default function MockupsExplorer({ onOpenLightbox }) {
         className="flex gap-4 overflow-x-auto pb-4 pt-1 scroll-smooth scrollbar-thin"
       >
         {filteredMockups.length === 0 ? (
-          <div className="w-full py-16 text-center text-slate-500 font-mono text-sm bg-[#0B101B] rounded-2xl border border-slate-800">
+          <div className="w-full py-16 text-center text-slate-500 font-mono text-sm bg-[#F8FAFC] rounded-lg border border-slate-200">
             No se encontraron pantallas para este filtro o criterio de búsqueda.
           </div>
         ) : (
@@ -127,7 +127,7 @@ export default function MockupsExplorer({ onOpenLightbox }) {
                 sound.ping();
                 onOpenLightbox(`assets/mockups/${mockup.file}`, `${mockup.id}: ${mockup.title}`, mockup.desc);
               }}
-              className="flex-none w-[320px] bg-[#0B101B] border border-slate-800 rounded-2xl overflow-hidden shadow-xl hover:border-emerald-500/60 hover:shadow-2xl hover:shadow-emerald-950/20 transition-all duration-300 cursor-pointer group flex flex-col"
+              className="flex-none w-[320px] bg-[#F8FAFC] border border-slate-200 rounded-lg overflow-hidden shadow-sm hover:border-emerald-500/60 hover:shadow-sm hover:shadow-emerald-950/20 transition-all duration-300 cursor-pointer group flex flex-col"
             >
               {/* Thumbnail */}
               <div className="w-full h-44 bg-black overflow-hidden relative">
@@ -138,7 +138,7 @@ export default function MockupsExplorer({ onOpenLightbox }) {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0B101B] via-transparent to-transparent opacity-80" />
-                <div className="absolute top-2 right-2 p-1.5 bg-black/70 border border-slate-700 text-emerald-400 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute top-2 right-2 p-1.5 bg-black/70 border border-slate-300 text-emerald-700 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
                   <Eye className="w-3.5 h-3.5" />
                 </div>
               </div>
@@ -147,22 +147,22 @@ export default function MockupsExplorer({ onOpenLightbox }) {
               <div className="p-4 flex-1 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-1.5 font-mono">
-                    <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">
+                    <span className="text-xs font-bold text-emerald-700 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">
                       {mockup.id}
                     </span>
                     <span className="text-[10px] text-slate-500 font-medium">
                       {mockup.catName}
                     </span>
                   </div>
-                  <h3 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors line-clamp-1">
+                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-emerald-800 transition-colors line-clamp-1">
                     {mockup.title}
                   </h3>
-                  <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed">
                     {mockup.desc}
                   </p>
                 </div>
 
-                <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-emerald-400 font-mono font-bold">
+                <div className="mt-3 pt-2 border-t border-slate-200/80 flex items-center justify-between text-[11px] text-emerald-700 font-mono font-bold">
                   <span>Ver a Pantalla Completa</span>
                   <span>→</span>
                 </div>
@@ -172,12 +172,12 @@ export default function MockupsExplorer({ onOpenLightbox }) {
         )}
       </div>
 
-      <div className="p-3 bg-[#0B101B] border border-slate-800 rounded-xl text-xs font-mono text-slate-300 flex flex-wrap items-center justify-between gap-2">
-        <span className="flex items-center gap-1.5 text-slate-400">
+      <div className="p-3 bg-[#F8FAFC] border border-slate-200 rounded-md text-xs font-mono text-slate-700 flex flex-wrap items-center justify-between gap-2">
+        <span className="flex items-center gap-1.5 text-slate-600">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
           Haz clic en cualquier pantalla para abrirla en el Lightbox 300 DPI con zoom e información del requerimiento.
         </span>
-        <span className="font-bold text-emerald-400">
+        <span className="font-bold text-emerald-700">
           Mostrando {filteredMockups.length} de {MOCKUPS_DATA.length} pantallas
         </span>
       </div>

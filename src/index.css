@@ -4,12 +4,12 @@
 
 :root {
   --font-scale: 1;
-  --bg-onyx: #06090F;
-  --bg-surface: #0B101B;
-  --bg-card: #101726;
-  --color-emerald-neon: #00F59B;
+  --bg-onyx: #FFFFFF;
+  --bg-surface: #F8FAFC;
+  --bg-card: #F1F5F9;
+  --color-emerald-neon: #047857;
   --color-emerald-base: #10B981;
-  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(15, 23, 42, 0.12);
   --border-glow: rgba(0, 245, 155, 0.25);
 }
 
@@ -28,35 +28,26 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   background-color: var(--bg-onyx);
-  color: #E2E8F0;
+  color: #0F172A;
 }
 
 body {
   background-color: var(--bg-onyx);
-  color: #E2E8F0;
+  color: #0F172A;
   overflow-x: hidden;
 }
 
 /* Subtle Cyber Technical Grid Background */
 .bg-grid-cyber {
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-image:
+    linear-gradient(to right, rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
-/* Technical Scanline Overlay */
+/* Keep diagrams and moving sections visually quiet in the light layout. */
 .scanlines {
-  background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%, 
-    rgba(0, 0, 0, 0.25) 50%
-  ), linear-gradient(
-    90deg,
-    rgba(255, 0, 0, 0.02),
-    rgba(0, 255, 0, 0.01),
-    rgba(0, 0, 255, 0.02)
-  );
-  background-size: 100% 4px, 6px 100%;
+  background: none;
   pointer-events: none;
 }
 
@@ -67,16 +58,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #06090F;
+  background: #F8FAFC;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1E293B;
+  background: #CBD5E1;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00F59B;
+  background: #047857;
   box-shadow: 0 0 10px rgba(0, 245, 155, 0.5);
 }
 
@@ -91,7 +82,7 @@ body {
   font-weight: 600;
   font-size: 0.9em;
   background-color: rgba(0, 245, 155, 0.08);
-  color: #00F59B;
+  color: #047857;
   border: 1px solid rgba(0, 245, 155, 0.25);
   transition: all 0.2s ease;
   cursor: pointer;
@@ -100,25 +91,22 @@ body {
 
 .tech-term-badge:hover {
   background-color: rgba(0, 245, 155, 0.18);
-  border-color: #00F59B;
-  color: #FFFFFF;
-  box-shadow: 0 0 14px rgba(0, 245, 155, 0.35);
+  border-color: #047857;
+  color: #065F46;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
   transform: translateY(-1px);
 }
 
 .tech-term-badge::after {
-  content: "✦";
-  font-size: 0.7em;
-  opacity: 0.8;
-  margin-left: 2px;
+  content: none;
 }
 
 /* Glass Dark Panel */
 .glass-panel-dark {
-  background: rgba(11, 16, 27, 0.85);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(15, 23, 42, 0.1);
 }
 
 .glass-panel-dark:hover {
@@ -127,11 +115,11 @@ body {
 
 /* Glowing Neon Elements */
 .glow-emerald {
-  box-shadow: 0 0 25px rgba(0, 245, 155, 0.15);
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
 }
 
 .glow-emerald-strong {
-  box-shadow: 0 0 35px rgba(0, 245, 155, 0.3);
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.09);
 }
 
 /* Horizon Line Fade */
@@ -139,3 +127,7 @@ body {
   mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
 }
+
+/* Light report layout; video storytelling panels retain their intentional dark stage. */
+::selection { background: #D1FAE5; color: #064E3B; }
+:focus-visible { outline: 2px solid #059669; outline-offset: 2px; }

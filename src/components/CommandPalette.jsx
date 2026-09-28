@@ -31,7 +31,7 @@ export default function CommandPalette({
         type: 'erf',
         typeLabel: 'Requisito ERF',
         icon: Layers,
-        badgeColor: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30',
+        badgeColor: 'bg-emerald-500/10 text-emerald-700 border border-emerald-500/30',
         title: `${erf.id} — ${erf.title}`,
         subtitle: `Actor: ${erf['actor(es)'] || 'N/A'} • Prioridad: ${erf.prioridad || 'Alta'}`,
         raw: erf
@@ -45,7 +45,7 @@ export default function CommandPalette({
         type: 'mockup',
         typeLabel: 'Mockup UI',
         icon: ImageIcon,
-        badgeColor: 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30',
+        badgeColor: 'bg-cyan-500/10 text-cyan-700 border border-cyan-500/30',
         title: `${mockup.id}: ${mockup.title}`,
         subtitle: mockup.desc,
         file: mockup.file,
@@ -60,7 +60,7 @@ export default function CommandPalette({
         type: 'diagram',
         typeLabel: 'Diagrama UML',
         icon: GitFork,
-        badgeColor: 'bg-blue-500/10 text-blue-400 border border-blue-500/30',
+        badgeColor: 'bg-blue-500/10 text-blue-700 border border-blue-500/30',
         title: diag.title,
         subtitle: diag.desc,
         file: diag.file,
@@ -118,7 +118,7 @@ export default function CommandPalette({
         type: 'evidence',
         typeLabel: item.type === 'folder' ? 'Carpeta Drive' : 'Archivo Drive',
         icon: item.type === 'folder' ? Layers : BookOpen,
-        badgeColor: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30',
+        badgeColor: 'bg-emerald-500/10 text-emerald-700 border border-emerald-500/30',
         title: item.name,
         subtitle: item.path,
         raw: item,
@@ -218,17 +218,17 @@ export default function CommandPalette({
       aria-modal="true"
     >
       <div
-        className="w-full max-w-2xl bg-[#0B101B] rounded-2xl shadow-2xl border border-slate-800 overflow-hidden flex flex-col max-h-[80vh] font-mono animate-scaleUp"
+        className="w-full max-w-2xl bg-[#F8FAFC] rounded-lg shadow-sm border border-slate-200 overflow-hidden flex flex-col max-h-[80vh] font-mono animate-scaleUp"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={handleListKeyDown}
       >
         {/* Search Input Bar */}
-        <div className="flex items-center px-4 py-3.5 border-b border-slate-800 gap-3 bg-[#06090F]">
-          <Search className="w-5 h-5 text-emerald-400 shrink-0" />
+        <div className="flex items-center px-4 py-3.5 border-b border-slate-200 gap-3 bg-white">
+          <Search className="w-5 h-5 text-emerald-700 shrink-0" />
           <input
             ref={inputRef}
             type="text"
-            className="w-full bg-transparent text-white placeholder-slate-500 text-sm focus:outline-none font-mono"
+            className="w-full bg-transparent text-slate-900 placeholder-slate-500 text-sm focus:outline-none font-mono"
             placeholder="Buscar por ID (ERF-05.04, M12, D04, CP-03), término o concepto..."
             value={query}
             onChange={(e) => {
@@ -239,22 +239,22 @@ export default function CommandPalette({
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="p-1 rounded hover:bg-slate-800 text-slate-400 hover:text-white transition"
+              className="p-1 rounded hover:bg-slate-200 text-slate-600 hover:text-slate-900 transition"
               aria-label="Limpiar búsqueda"
             >
               <X className="w-4 h-4" />
             </button>
           )}
-          <kbd className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-mono text-slate-400 bg-slate-900 rounded border border-slate-700">
+          <kbd className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-mono text-slate-600 bg-slate-100 rounded border border-slate-300">
             ESC
           </kbd>
         </div>
 
         {/* Results List */}
-        <div ref={listRef} className="overflow-y-auto flex-1 p-2 space-y-1 divide-y divide-slate-800/60 scrollbar-thin">
+        <div ref={listRef} className="overflow-y-auto flex-1 p-2 space-y-1 divide-y divide-slate-200/60 scrollbar-thin">
           {filtered.length === 0 ? (
             <div className="py-12 text-center text-slate-500">
-              <Search className="w-8 h-8 mx-auto mb-2 opacity-40 text-slate-400" />
+              <Search className="w-8 h-8 mx-auto mb-2 opacity-40 text-slate-600" />
               <p className="text-xs">No se encontraron artefactos para "{query}"</p>
               <p className="text-[11px] text-slate-600 mt-1">Prueba con "ERF", "Split", "PostgreSQL", "M39", o "Habeas Data"</p>
             </div>
@@ -268,14 +268,14 @@ export default function CommandPalette({
                   key={`${item.type}-${item.id}-${idx}`}
                   onClick={() => handleSelect(item)}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`p-3 rounded-xl cursor-pointer transition flex items-center justify-between gap-3 ${
-                    isSelected 
-                      ? 'bg-emerald-500/15 border border-emerald-500/40 text-white shadow-sm' 
-                      : 'hover:bg-slate-900/60 text-slate-300 border border-transparent'
+                  className={`p-3 rounded-md cursor-pointer transition flex items-center justify-between gap-3 ${
+                    isSelected
+                      ? 'bg-emerald-500/15 border border-emerald-500/40 text-slate-900 shadow-sm'
+                      : 'hover:bg-slate-100/60 text-slate-700 border border-transparent'
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className={`p-2 rounded-lg shrink-0 ${isSelected ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-900 text-slate-400 border border-slate-800'}`}>
+                    <div className={`p-2 rounded-lg shrink-0 ${isSelected ? 'bg-emerald-500/20 text-emerald-700' : 'bg-slate-100 text-slate-600 border border-slate-200'}`}>
                       <Icon className="w-4 h-4" />
                     </div>
 
@@ -284,11 +284,11 @@ export default function CommandPalette({
                         <span className={`px-1.5 py-0.2 rounded text-[10px] font-bold ${item.badgeColor}`}>
                           {item.typeLabel}
                         </span>
-                        <h4 className={`text-xs font-bold truncate ${isSelected ? 'text-white' : 'text-slate-200'}`}>
+                        <h4 className={`text-xs font-bold truncate ${isSelected ? 'text-slate-900' : 'text-slate-800'}`}>
                           {item.title}
                         </h4>
                       </div>
-                      <p className="text-[11px] text-slate-400 truncate mt-0.5 font-sans">
+                      <p className="text-[11px] text-slate-600 truncate mt-0.5 font-sans">
                         {item.subtitle}
                       </p>
                     </div>
@@ -296,7 +296,7 @@ export default function CommandPalette({
 
                   <div className="shrink-0 flex items-center gap-1 text-slate-500">
                     {isSelected && (
-                      <span className="flex items-center gap-1 text-[10px] text-emerald-400 font-bold">
+                      <span className="flex items-center gap-1 text-[10px] text-emerald-700 font-bold">
                         <span>ABRIR</span>
                         <CornerDownLeft className="w-3 h-3" />
                       </span>
@@ -309,20 +309,20 @@ export default function CommandPalette({
         </div>
 
         {/* Footer Navigation Hints */}
-        <div className="px-4 py-2.5 bg-[#06090F] border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
+        <div className="px-4 py-2.5 bg-white border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-500">
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-[10px] text-slate-400">↑↓</kbd> Navegar
+              <kbd className="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-[10px] text-slate-600">↑↓</kbd> Navegar
             </span>
             <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-[10px] text-slate-400">↵</kbd> Seleccionar
+              <kbd className="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-[10px] text-slate-600">↵</kbd> Seleccionar
             </span>
             <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-[10px] text-slate-400">ESC</kbd> Cerrar
+              <kbd className="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-[10px] text-slate-600">ESC</kbd> Cerrar
             </span>
           </div>
           <div>
-            <span className="text-emerald-400 font-bold">{filtered.length}</span> resultados indexados
+            <span className="text-emerald-700 font-bold">{filtered.length}</span> resultados indexados
           </div>
         </div>
       </div>
